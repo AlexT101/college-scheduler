@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">CollegeScheduler</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Classes</string>
+    <string name="title_dashboard">Assignments</string>
+    <string name="title_notifications">To-Do List</string>
     <string name="classes">Classes</string>
+    <string name="add">Add Class</string>
 </resources>
