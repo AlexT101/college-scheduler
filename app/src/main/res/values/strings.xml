@@ -4,5 +4,8 @@
     <string name="title_dashboard">Assignments</string>
     <string name="title_notifications">To-Do List</string>
     <string name="classes">Classes</string>
+    <string name="tasks">ToDo List</string>
     <string name="add">Add Class</string>
+    <string name="addTask">Add Task</string>
+
 </resources>
