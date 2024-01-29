@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">CollegeScheduler</string>
-<<<<<<< Updated upstream
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-=======
     <string name="title_home">Classes</string>
     <string name="title_dashboard">Assignments</string>
     <string name="title_notifications">To-Do List</string>
@@ -17,6 +15,5 @@
     <string name="Exam_Time">|Time: 06:00pm</string>
     <string name="Exam_Date">Date: 1/24/24</string>
     <string name="header">Exams</string>
-
->>>>>>> Stashed changes
+    <string name="add">Add Class</string>
 </resources>
