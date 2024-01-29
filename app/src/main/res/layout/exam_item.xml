@@ -9,6 +9,7 @@
     android:padding="8dp">
 
     <LinearLayout
+        android:id="@+id/dashboard_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
@@ -20,28 +21,29 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/exam_name"
+                android:id="@+id/exam_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:orientation="vertical"
-                android:text="Midterm 1"
+                android:text="@string/Exam_Title"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/exam_name">
+                app:layout_constraintTop_toBottomOf="@+id/exam_Title">
 
                 <TextView
                     android:id="@+id/exam_Date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date: 1/24/24"
+                    android:text="@string/Exam_Date"
                     android:textColor="@color/black"
                     android:textSize="11sp" />
 
@@ -50,47 +52,47 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="|Time: 06:00pm"
+                    android:text="@string/Exam_Time"
                     android:textColor="@color/black"
                     android:textSize="11sp" />
 
                 <TextView
-                    android:id="@+id/exam_location"
+                    android:id="@+id/exam_Location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="| Location: CULC 144"
+                    android:text="@string/Exam_Location"
                     android:textColor="@color/black"
                     android:textSize="11sp" />
 
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/edit"
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginEnd="16dp"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintEnd_toStartOf="@+id/check"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.448"
                 app:srcCompat="@drawable/baseline_auto_delete_24" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/trash"
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginEnd="16dp"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                app:layout_constraintEnd_toStartOf="@+id/edit"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.444"
                 app:srcCompat="@drawable/baseline_edit_24" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/check"
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginEnd="16dp"
