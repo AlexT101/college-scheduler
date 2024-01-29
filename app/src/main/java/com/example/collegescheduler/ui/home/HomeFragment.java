@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         view = getView();
 
         recyclerView = view.findViewById(R.id.recyclerView);
-    //findViewById(R.id.recyclerView);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
