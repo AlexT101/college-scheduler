@@ -22,7 +22,7 @@ import com.example.collegescheduler.databinding.FragmentNotificationsBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsFragment extends Fragment {
+public class NotificationsFragment extends Fragment implements TaskCardAdapter.OnDeleteButtonClickListener {
 
     private FragmentNotificationsBinding binding;
 
@@ -56,8 +56,16 @@ public class NotificationsFragment extends Fragment {
         taskCardList = new ArrayList<>();
         taskCardList.add(new TaskCard("Task 1", "TITLE"));
 
-        adapter = new TaskCardAdapter(taskCardList);
+        adapter = new TaskCardAdapter(taskCardList, this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onDeleteButtonClick(int position) {
+        // Remove the item from the list
+        taskCardList.remove(position);
+        // Notify the adapter of item removal
+        adapter.notifyItemRemoved(position);
     }
 
     @Override
