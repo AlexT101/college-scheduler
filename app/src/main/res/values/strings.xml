@@ -20,4 +20,5 @@
     <string name="save">Save Class</string>
     <string name="cancel">Cancel</string>
     <string name="class_info">Class Info</string>
+    <string name="title_assignments">Assignments</string>
 </resources>
