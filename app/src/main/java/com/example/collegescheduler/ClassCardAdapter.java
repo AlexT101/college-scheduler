@@ -3,6 +3,7 @@ package com.example.collegescheduler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,10 +14,17 @@ import com.example.collegescheduler.ClassCard;
 import com.example.collegescheduler.R;
 
 public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.ClassCardViewHolder> {
-    private List<ClassCard> classCards;
 
-    public ClassCardAdapter(List<ClassCard> classCards) {
+    public interface OnDeleteButtonClickListener {
+        void onDeleteButtonClick(int position);
+    }
+
+    private List<ClassCard> classCards;
+    private OnDeleteButtonClickListener listener;
+
+    public ClassCardAdapter(List<ClassCard> classCards, OnDeleteButtonClickListener listener) {
         this.classCards = classCards;
+        this.listener = listener;
     }
 
     @Override
@@ -31,6 +39,17 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
         holder.textViewTitle.setText(classCard.getTitle());
         holder.textViewTime.setText(classCard.getTime());
         holder.textViewLocation.setText(classCard.getLocation());
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = holder.getBindingAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onDeleteButtonClick(position);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -40,12 +59,14 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
 
     static class ClassCardViewHolder extends RecyclerView.ViewHolder {
         TextView textViewTitle, textViewTime, textViewLocation;
+        ImageButton deleteButton;
 
         public ClassCardViewHolder(View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewTime = itemView.findViewById(R.id.textViewTime);
             textViewLocation = itemView.findViewById(R.id.textViewLocation);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
 }

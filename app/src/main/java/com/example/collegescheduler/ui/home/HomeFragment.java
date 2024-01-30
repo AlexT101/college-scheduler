@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +24,9 @@ import com.example.collegescheduler.databinding.FragmentHomeBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+import androidx.appcompat.app.AlertDialog;
+
+public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteButtonClickListener {
 
     private FragmentHomeBinding binding;
 
@@ -58,9 +62,58 @@ public class HomeFragment extends Fragment {
         classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
         classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
 
-        adapter = new ClassCardAdapter(classCardList);
+        adapter = new ClassCardAdapter(classCardList, this);
         recyclerView.setAdapter(adapter);
 
+        Button addButton = view.findViewById(R.id.addButton);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Inflate the dialog layout
+                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_class, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setView(dialogView);
+
+                // Find views inside the dialog
+                EditText editTextClassName = dialogView.findViewById(R.id.editTextClassName);
+                EditText editTextClassTime = dialogView.findViewById(R.id.editTextClassTime);
+                EditText editTextClassLocation = dialogView.findViewById(R.id.editTextClassLocation);
+                Button buttonSaveClass = dialogView.findViewById(R.id.buttonSaveClass);
+
+                // Create and show the dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                // Handle the save button click
+                buttonSaveClass.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Get the user input
+                        String className = editTextClassName.getText().toString();
+                        String classTime = editTextClassTime.getText().toString();
+                        String classLocation = editTextClassLocation.getText().toString();
+
+                        // Add the new class to the ArrayList
+                        classCardList.add(new ClassCard(className, classTime, classLocation));
+
+                        // Notify the adapter that the data has changed
+                        adapter.notifyDataSetChanged();
+
+                        // Dismiss the dialog
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+    }
+    @Override
+    public void onDeleteButtonClick(int position) {
+        // Remove the item from the list
+        classCardList.remove(position);
+        // Notify the adapter of item removal
+        adapter.notifyItemRemoved(position);
     }
 
     @Override

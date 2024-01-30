@@ -21,10 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private RecyclerView recyclerView;
-    private ClassCardAdapter adapter;
-    private List<ClassCard> classCardList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
