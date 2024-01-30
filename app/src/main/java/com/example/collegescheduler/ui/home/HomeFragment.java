@@ -83,6 +83,7 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                 EditText editTextClassTime = dialogView.findViewById(R.id.editTextClassTime);
                 EditText editTextClassLocation = dialogView.findViewById(R.id.editTextClassLocation);
                 Button buttonSaveClass = dialogView.findViewById(R.id.buttonSaveClass);
+                Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
 
                 // Create and show the dialog
                 AlertDialog dialog = builder.create();
@@ -111,6 +112,12 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                         dialog.dismiss();
                     }
                 });
+                buttonCancelClass.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
 
@@ -127,6 +134,7 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
         EditText editTextClassTime = dialogView.findViewById(R.id.editTextClassTime);
         EditText editTextClassLocation = dialogView.findViewById(R.id.editTextClassLocation);
         Button buttonSaveClass = dialogView.findViewById(R.id.buttonSaveClass);
+        Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
 
         editTextClassName.setText(classCardList.get(position).getTitle());
         editTextClassTime.setText(classCardList.get(position).getTime());
@@ -157,6 +165,12 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                 adapter.notifyDataSetChanged();
 
                 // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+        buttonCancelClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dialog.dismiss();
             }
         });
