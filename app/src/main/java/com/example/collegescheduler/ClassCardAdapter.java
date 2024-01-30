@@ -17,6 +17,7 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
 
     public interface OnDeleteButtonClickListener {
         void onDeleteButtonClick(int position);
+        void onEditButtonClick(int position);
     }
 
     private List<ClassCard> classCards;
@@ -50,6 +51,17 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
                 }
             }
         });
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = holder.getBindingAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onEditButtonClick(position);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -59,7 +71,7 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
 
     static class ClassCardViewHolder extends RecyclerView.ViewHolder {
         TextView textViewTitle, textViewTime, textViewLocation;
-        ImageButton deleteButton;
+        ImageButton deleteButton, editButton;
 
         public ClassCardViewHolder(View itemView) {
             super(itemView);
@@ -67,6 +79,7 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
             textViewTime = itemView.findViewById(R.id.textViewTime);
             textViewLocation = itemView.findViewById(R.id.textViewLocation);
             deleteButton = itemView.findViewById(R.id.deleteButton);
+            editButton = itemView.findViewById(R.id.editButton);
         }
     }
 }

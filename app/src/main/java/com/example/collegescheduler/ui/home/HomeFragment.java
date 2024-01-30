@@ -33,6 +33,9 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
     private RecyclerView recyclerView;
     private ClassCardAdapter adapter;
     private List<ClassCard> classCardList;
+    final String default_name = "Untitled Class";
+    final String default_time = "No Time";
+    final String default_location = "No Location";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -94,6 +97,10 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                         String classTime = editTextClassTime.getText().toString();
                         String classLocation = editTextClassLocation.getText().toString();
 
+                        if (className.equals("")) className=default_name;
+                        if (classTime.equals("")) classTime=default_time;
+                        if (classLocation.equals("")) classLocation=default_location;
+
                         // Add the new class to the ArrayList
                         classCardList.add(new ClassCard(className, classTime, classLocation));
 
@@ -108,6 +115,55 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
         });
 
     }
+    @Override
+    public void onEditButtonClick(int position) {
+        // Inflate the dialog layout
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_class, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(dialogView);
+
+        // Find views inside the dialog
+        EditText editTextClassName = dialogView.findViewById(R.id.editTextClassName);
+        EditText editTextClassTime = dialogView.findViewById(R.id.editTextClassTime);
+        EditText editTextClassLocation = dialogView.findViewById(R.id.editTextClassLocation);
+        Button buttonSaveClass = dialogView.findViewById(R.id.buttonSaveClass);
+
+        editTextClassName.setText(classCardList.get(position).getTitle());
+        editTextClassTime.setText(classCardList.get(position).getTime());
+        editTextClassLocation.setText(classCardList.get(position).getLocation());
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Handle the save button click
+        buttonSaveClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the user input
+                String className = editTextClassName.getText().toString();
+                String classTime = editTextClassTime.getText().toString();
+                String classLocation = editTextClassLocation.getText().toString();
+
+                if (className.equals("")) className=default_name;
+                if (classTime.equals("")) classTime=default_time;
+                if (classLocation.equals("")) classLocation=default_location;
+
+                classCardList.get(position).setTitle(className);
+                classCardList.get(position).setTime(classTime);
+                classCardList.get(position).setLocation(classLocation);
+
+                // Notify the adapter that the data has changed
+                adapter.notifyDataSetChanged();
+
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+        // Notify the adapter of item removal
+        adapter.notifyItemChanged(position);
+    }
+
     @Override
     public void onDeleteButtonClick(int position) {
         // Remove the item from the list
