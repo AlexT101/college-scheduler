@@ -41,22 +41,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-
-        //Adding class cards to recycler view
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-
-        classCardList = new ArrayList<>();
-        classCardList.add(new ClassCard("CS2340", "TR: 2:00-3:15", "IC103"));
-        classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
-        classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
-        classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
-
-        adapter = new ClassCardAdapter(classCardList);
-        recyclerView.setAdapter(adapter);
     }
-
 }
