@@ -30,25 +30,33 @@
                 app:layout_constraintEnd_toStartOf="@+id/toDoEditButton">
 
                 <TextView
-                    android:id="@+id/textViewTask"
+                    android:id="@+id/textViewTaskTitle"
                     android:layout_width="150dp"
                     android:layout_height="30dp"
                     android:fontFamily="sans-serif-black"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toTopOf="@+id/textViewTaskTitle"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewTaskTime"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textViewTaskTitle"
+                    android:id="@+id/textViewTaskTime"
+                    android:layout_width="150dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewTaskCourse"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTaskTitle" />
+                <TextView
+                    android:id="@+id/textViewTaskCourse"
                     android:layout_width="150dp"
                     android:layout_height="20dp"
                     app:layout_constraintBottom_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewTask" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTime" />
 
             </LinearLayout>
 

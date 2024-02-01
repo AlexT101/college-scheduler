@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.collegescheduler.ClassCard;
+import com.example.collegescheduler.Item;
 import com.example.collegescheduler.TaskCard;
 import com.example.collegescheduler.TaskCardAdapter;
 import com.example.collegescheduler.Data;
@@ -36,8 +37,10 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
     private RecyclerView recyclerView;
     private TaskCardAdapter adapter;
 
-    final String default_name = "Untitled Task";
-    final String default_time = "No TITLE";
+    final String default_title = "Untitled Task";
+    final String default_time = "No Time";
+    final String default_date = "No Date";
+    final String default_course = "No Course";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +65,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
-        adapter = new TaskCardAdapter(Data.taskCardList, this);
+        adapter = new TaskCardAdapter(Data.items, this);
         recyclerView.setAdapter(adapter);
 
         Button addButton = view.findViewById(R.id.addButtonToDo);
@@ -76,8 +79,10 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                 builder.setView(dialogView);
 
                 // Find views inside the dialog
-                EditText editTextTaskName = dialogView.findViewById(R.id.editTaskName);
-                EditText editTextTaskTITLE = dialogView.findViewById(R.id.editTaskTITLE);
+                EditText editTextTitle = dialogView.findViewById(R.id.editTaskTitle);
+                EditText editTextTime = dialogView.findViewById(R.id.editTaskTime);
+                EditText editTextDate = dialogView.findViewById(R.id.editTaskDate);
+                EditText editTextCourse = dialogView.findViewById(R.id.editTaskCourse);
                 Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
                 Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
 
@@ -90,14 +95,19 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                     @Override
                     public void onClick(View v) {
                         // Get the user input
-                        String taskName = editTextTaskName.getText().toString();
-                        String taskTITLE = editTextTaskTITLE.getText().toString();
+                        String classTitle = editTextTitle.getText().toString();
+                        String classTime = editTextTime.getText().toString();
+                        String classDate = editTextDate.getText().toString();
+                        String classCourse = editTextCourse.getText().toString();
 
-                        if (taskName.equals("")) taskName=default_name;
-                        if (taskTITLE.equals("")) taskTITLE=default_time;
+                        if (classTitle.equals("")) classTitle=default_title;
+                        if (classTime.equals("")) classTime=default_time;
+                        if (classDate.equals("")) classDate=default_date;
+                        if (classCourse.equals("")) classCourse=default_course;
+
 
                         // Add the new class to the ArrayList
-                        Data.taskCardList.add(new TaskCard(taskName, taskTITLE));
+                        Data.items.add(new Item("todo", classTitle, classDate, classTime, classCourse));
 
                         // Notify the adapter that the data has changed
                         adapter.notifyDataSetChanged();
@@ -123,13 +133,17 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
         builder.setView(dialogView);
 
         // Find views inside the dialog
-        EditText editTextTask = dialogView.findViewById(R.id.editTaskName);
-        EditText editTextTaskTITLE = dialogView.findViewById(R.id.editTaskTITLE);
+        EditText editTextTitle = dialogView.findViewById(R.id.editTaskTitle);
+        EditText editTextTime = dialogView.findViewById(R.id.editTaskTime);
+        EditText editTextDate = dialogView.findViewById(R.id.editTaskDate);
+        EditText editTextCourse = dialogView.findViewById(R.id.editTaskCourse);
         Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
         Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
 
-        editTextTask.setText(Data.taskCardList.get(position).getTask());
-        editTextTaskTITLE.setText(Data.taskCardList.get(position).getToDoTitle());
+        editTextTitle.setText(Data.items.get(position).getTitle());
+        editTextTime.setText(Data.items.get(position).getTime());
+        editTextDate.setText(Data.items.get(position).getDate());
+        editTextCourse.setText(Data.items.get(position).getCourse());
 
         // Create and show the dialog
         AlertDialog dialog = builder.create();
@@ -140,14 +154,20 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
             @Override
             public void onClick(View v) {
                 // Get the user input
-                String className = editTextTask.getText().toString();
-                String classTime = editTextTaskTITLE.getText().toString();
+                String classTitle = editTextTitle.getText().toString();
+                String classTime = editTextTime.getText().toString();
+                String classDate = editTextDate.getText().toString();
+                String classCourse = editTextCourse.getText().toString();
 
-                if (className.equals("")) className=default_name;
+                if (classTitle.equals("")) classTitle=default_title;
                 if (classTime.equals("")) classTime=default_time;
+                if (classDate.equals("")) classDate=default_date;
+                if (classCourse.equals("")) classCourse=default_course;
 
-                Data.taskCardList.get(position).setTask(className);
-                Data.taskCardList.get(position).setToDoTitle(classTime);
+                Data.items.get(position).setTitle(classTitle);
+                Data.items.get(position).setTime(classTime);
+                Data.items.get(position).setDate(classDate);
+                Data.items.get(position).setCourse(classCourse);
 
                 // Notify the adapter that the data has changed
                 adapter.notifyDataSetChanged();
@@ -169,7 +189,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
     @Override
     public void onDeleteButtonClick(int position) {
         // Remove the item from the list
-        Data.taskCardList.remove(position);
+        Data.items.remove(position);
         // Notify the adapter of item removal
         adapter.notifyItemRemoved(position);
     }

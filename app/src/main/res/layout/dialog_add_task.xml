@@ -18,17 +18,28 @@
         android:padding="16dp">
 
         <EditText
-            android:id="@+id/editTaskName"
+            android:id="@+id/editTaskTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Task" />
+            android:hint="Title" />
 
         <EditText
-            android:id="@+id/editTaskTITLE"
+            android:id="@+id/editTaskTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="TITLE" />
+            android:hint="Time" />
 
+        <EditText
+            android:id="@+id/editTaskDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date" />
+
+        <EditText
+            android:id="@+id/editTaskCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Course" />
 
         <Button
             android:id="@+id/buttonSaveTask"

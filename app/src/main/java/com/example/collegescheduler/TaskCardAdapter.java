@@ -14,7 +14,7 @@ import com.example.collegescheduler.TaskCard;
 import com.example.collegescheduler.R;
 
 public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCardViewHolder> {
-    private List<TaskCard> taskCards;
+    private List<Item> taskCards;
     private OnDeleteButtonClickListener listener;
 
     public interface OnDeleteButtonClickListener {
@@ -22,7 +22,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
         void onEditButtonClick(int position);
     }
 
-    public TaskCardAdapter(List<TaskCard> taskCards, OnDeleteButtonClickListener listener) {
+    public TaskCardAdapter(List<Item> taskCards, OnDeleteButtonClickListener listener) {
         this.taskCards = taskCards;
         this.listener = listener;
     }
@@ -35,9 +35,10 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
 
     @Override
     public void onBindViewHolder(TaskCardViewHolder holder, int position) {
-        TaskCard taskCard = taskCards.get(position);
-        holder.textViewTask.setText(taskCard.getTask());
-        holder.textViewToDoTitle.setText(taskCard.getToDoTitle());
+        Item taskCard = taskCards.get(position);
+        holder.textViewToDoTitle.setText(taskCard.getTitle());
+        holder.textViewToDoTime.setText(taskCard.getTime() + " | " + taskCard.getDate());
+        holder.textViewToDoCourse.setText(taskCard.getCourse());
         holder.toDoDeleteButton.setOnClickListener(v -> {
             if (listener != null) {
                 int position1 = holder.getBindingAdapterPosition();
@@ -65,13 +66,14 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
     }
 
     static class TaskCardViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTask, textViewToDoTitle;
+        TextView textViewToDoTitle, textViewToDoTime, textViewToDoCourse;
         ImageButton toDoDeleteButton, toDoEditButton;
 
         public TaskCardViewHolder(View itemView) {
             super(itemView);
-            textViewTask = itemView.findViewById(R.id.textViewTask);
             textViewToDoTitle = itemView.findViewById(R.id.textViewTaskTitle);
+            textViewToDoTime = itemView.findViewById(R.id.textViewTaskTime);
+            textViewToDoCourse = itemView.findViewById(R.id.textViewTaskCourse);
             toDoDeleteButton = itemView.findViewById(R.id.toDoDeleteButton);
             toDoEditButton = itemView.findViewById(R.id.toDoEditButton);
 
