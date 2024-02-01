@@ -19,6 +19,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
 
     public interface OnDeleteButtonClickListener {
         void onDeleteButtonClick(int position);
+        void onEditButtonClick(int position);
     }
 
     public TaskCardAdapter(List<TaskCard> taskCards, OnDeleteButtonClickListener listener) {
@@ -45,6 +46,17 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
                 }
             }
         });
+        holder.toDoEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = holder.getBindingAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onEditButtonClick(position);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -54,13 +66,15 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
 
     static class TaskCardViewHolder extends RecyclerView.ViewHolder {
         TextView textViewTask, textViewToDoTitle;
-        ImageButton toDoDeleteButton;
+        ImageButton toDoDeleteButton, toDoEditButton;
 
         public TaskCardViewHolder(View itemView) {
             super(itemView);
             textViewTask = itemView.findViewById(R.id.textViewTask);
             textViewToDoTitle = itemView.findViewById(R.id.textViewTaskTitle);
             toDoDeleteButton = itemView.findViewById(R.id.toDoDeleteButton);
+            toDoEditButton = itemView.findViewById(R.id.toDoEditButton);
+
         }
     }
 }
