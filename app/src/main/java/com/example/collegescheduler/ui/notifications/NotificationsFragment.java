@@ -96,6 +96,9 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         String className = editTextTaskName.getText().toString();
                         String classTime = editTextTaskTITLE.getText().toString();
 
+                        if (className.equals("")) className=default_name;
+                        if (classTime.equals("")) classTime=default_time;
+
                         // Add the new class to the ArrayList
                         taskCardList.add(new TaskCard(className, classTime));
 
