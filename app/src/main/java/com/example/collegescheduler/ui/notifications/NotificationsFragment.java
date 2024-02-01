@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.collegescheduler.ClassCard;
 import com.example.collegescheduler.TaskCard;
 import com.example.collegescheduler.TaskCardAdapter;
+import com.example.collegescheduler.Data;
 import com.example.collegescheduler.R;
 import com.example.collegescheduler.SpacesItemDecoration;
 import com.example.collegescheduler.databinding.FragmentNotificationsBinding;
@@ -34,7 +35,6 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
 
     private RecyclerView recyclerView;
     private TaskCardAdapter adapter;
-    private List<TaskCard> taskCardList;
 
     final String default_name = "Untitled Task";
     final String default_time = "No TITLE";
@@ -62,10 +62,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
-        taskCardList = new ArrayList<>();
-        taskCardList.add(new TaskCard("Task 1", "TITLE"));
-
-        adapter = new TaskCardAdapter(taskCardList, this);
+        adapter = new TaskCardAdapter(Data.taskCardList, this);
         recyclerView.setAdapter(adapter);
 
         Button addButton = view.findViewById(R.id.addButtonToDo);
@@ -100,7 +97,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         if (taskTITLE.equals("")) taskTITLE=default_time;
 
                         // Add the new class to the ArrayList
-                        taskCardList.add(new TaskCard(taskName, taskTITLE));
+                        Data.taskCardList.add(new TaskCard(taskName, taskTITLE));
 
                         // Notify the adapter that the data has changed
                         adapter.notifyDataSetChanged();
@@ -131,8 +128,8 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
         Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
         Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
 
-        editTextTask.setText(taskCardList.get(position).getTask());
-        editTextTaskTITLE.setText(taskCardList.get(position).getToDoTitle());
+        editTextTask.setText(Data.taskCardList.get(position).getTask());
+        editTextTaskTITLE.setText(Data.taskCardList.get(position).getToDoTitle());
 
         // Create and show the dialog
         AlertDialog dialog = builder.create();
@@ -149,8 +146,8 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                 if (className.equals("")) className=default_name;
                 if (classTime.equals("")) classTime=default_time;
 
-                taskCardList.get(position).setTask(className);
-                taskCardList.get(position).setToDoTitle(classTime);
+                Data.taskCardList.get(position).setTask(className);
+                Data.taskCardList.get(position).setToDoTitle(classTime);
 
                 // Notify the adapter that the data has changed
                 adapter.notifyDataSetChanged();
@@ -172,7 +169,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
     @Override
     public void onDeleteButtonClick(int position) {
         // Remove the item from the list
-        taskCardList.remove(position);
+        Data.taskCardList.remove(position);
         // Notify the adapter of item removal
         adapter.notifyItemRemoved(position);
     }
