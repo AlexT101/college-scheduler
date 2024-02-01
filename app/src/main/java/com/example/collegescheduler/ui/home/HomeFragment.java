@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                         Data.classCardList.add(new ClassCard(classTitle, classTime, classLocation, classRepeat, classProfessor, classSection, classRoom));
 
                         // Notify the adapter that the data has changed
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyItemInserted(Data.classCardList.size()-1);
 
                         // Dismiss the dialog
                         dialog.dismiss();
@@ -170,7 +170,7 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                 Data.classCardList.get(position).setProfessor(classProfessor);
 
                 // Notify the adapter that the data has changed
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemChanged(position);
 
                 // Dismiss the dialog
                 dialog.dismiss();
@@ -182,8 +182,6 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                 dialog.dismiss();
             }
         });
-        // Notify the adapter of item removal
-        adapter.notifyItemChanged(position);
     }
 
     @Override

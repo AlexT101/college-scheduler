@@ -42,11 +42,13 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
 
             String textViewToDoTimeText = taskCard.getTime() + separator + taskCard.getDate();
             holder.textViewToDoTime.setText(textViewToDoTimeText);
+            holder.textViewToDoTime.setVisibility(View.VISIBLE);
         }else{
             holder.textViewToDoTime.setVisibility(View.GONE);
         }
         if (!taskCard.getCourse().isEmpty()) {
             holder.textViewToDoCourse.setText(taskCard.getCourse());
+            holder.textViewToDoCourse.setVisibility(View.VISIBLE);
         }else{
             holder.textViewToDoCourse.setVisibility(View.GONE);
         }

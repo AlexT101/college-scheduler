@@ -43,6 +43,7 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
 
             String textViewTimeText = classCard.getTime() + separator + classCard.getRepeat();
             holder.textViewTime.setText(textViewTimeText);
+            holder.textViewTime.setVisibility(View.VISIBLE);
         } else {
             holder.textViewTime.setVisibility(View.GONE);
         }
@@ -52,6 +53,7 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
 
             String textViewLocationText = classCard.getLocation() + separator + roomPrecede + classCard.getRoom();
             holder.textViewLocation.setText(textViewLocationText);
+            holder.textViewLocation.setVisibility(View.VISIBLE);
         } else {
             holder.textViewLocation.setVisibility(View.GONE);
         }
@@ -62,6 +64,7 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
 
             String textViewProfText = sectionPrecede + classCard.getSection() + separator + professorPrecede + classCard.getProfessor();
             holder.textViewProf.setText(textViewProfText);
+            holder.textViewProf.setVisibility(View.VISIBLE);
         } else {
             holder.textViewProf.setVisibility(View.GONE);
         }

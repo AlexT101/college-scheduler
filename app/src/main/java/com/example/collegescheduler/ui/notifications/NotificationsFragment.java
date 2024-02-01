@@ -99,7 +99,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         Data.items.add(new Item("todo", classTitle, classDate, classTime, classCourse));
 
                         // Notify the adapter that the data has changed
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyItemInserted(Data.items.size()-1);
 
                         // Dismiss the dialog
                         dialog.dismiss();
@@ -154,7 +154,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                 Data.items.get(position).setCourse(classCourse);
 
                 // Notify the adapter that the data has changed
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemChanged(position);
 
                 // Dismiss the dialog
                 dialog.dismiss();
