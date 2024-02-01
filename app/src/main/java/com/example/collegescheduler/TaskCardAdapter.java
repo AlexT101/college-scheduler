@@ -37,14 +37,11 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
         TaskCard taskCard = taskCards.get(position);
         holder.textViewTask.setText(taskCard.getTask());
         holder.textViewToDoTitle.setText(taskCard.getToDoTitle());
-        holder.toDoDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    int position = holder.getBindingAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onDeleteButtonClick(position);
-                    }
+        holder.toDoDeleteButton.setOnClickListener(v -> {
+            if (listener != null) {
+                int position1 = holder.getBindingAdapterPosition();
+                if (position1 != RecyclerView.NO_POSITION) {
+                    listener.onDeleteButtonClick(position1);
                 }
             }
         });
