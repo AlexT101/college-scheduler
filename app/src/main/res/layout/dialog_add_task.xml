@@ -37,7 +37,7 @@
             android:text="Save Task" />
 
         <Button
-            android:id="@+id/buttonCancelClass"
+            android:id="@+id/buttonCancelTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/cancel"

@@ -79,6 +79,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                 EditText editTextTaskName = dialogView.findViewById(R.id.editTaskName);
                 EditText editTextTaskTITLE = dialogView.findViewById(R.id.editTaskTITLE);
                 Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
+                Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelClass);
 
                 // Create and show the dialog
                 AlertDialog dialog = builder.create();
@@ -102,8 +103,64 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         dialog.dismiss();
                     }
                 });
+                buttonCancelTask.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
             }
         });
+    }
+    public void onEditButtonClick(int position) {
+        // Inflate the dialog layout
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_task, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(dialogView);
+
+        // Find views inside the dialog
+        EditText editTextTask = dialogView.findViewById(R.id.editTaskName);
+        EditText editTextTaskTITLE = dialogView.findViewById(R.id.editTaskTITLE);
+        Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
+        Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
+
+        editTextTask.setText(taskCardList.get(position).getTask());
+        editTextTaskTITLE.setText(taskCardList.get(position).getToDoTitle());
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Handle the save button click
+        buttonSaveTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the user input
+                String className = editTextTask.getText().toString();
+                String classTime = editTextTaskTITLE.getText().toString();
+
+                if (className.equals("")) className=default_name;
+                if (classTime.equals("")) classTime=default_time;
+
+                taskCardList.get(position).setTask(className);
+                taskCardList.get(position).setToDoTitle(classTime);
+
+                // Notify the adapter that the data has changed
+                adapter.notifyDataSetChanged();
+
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+        buttonCancelTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        // Notify the adapter of item removal
+        adapter.notifyItemChanged(position);
     }
 
     @Override
