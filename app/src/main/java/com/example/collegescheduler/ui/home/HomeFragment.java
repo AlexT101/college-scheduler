@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.collegescheduler.ClassCard;
 import com.example.collegescheduler.ClassCardAdapter;
+import com.example.collegescheduler.Data;
 import com.example.collegescheduler.R;
 import com.example.collegescheduler.SpacesItemDecoration;
 import com.example.collegescheduler.databinding.FragmentHomeBinding;
@@ -32,7 +33,6 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
 
     private RecyclerView recyclerView;
     private ClassCardAdapter adapter;
-    private List<ClassCard> classCardList;
     final String default_name = "Untitled Class";
     final String default_time = "No Time";
     final String default_location = "No Location";
@@ -59,13 +59,7 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
-        classCardList = new ArrayList<>();
-        classCardList.add(new ClassCard("CS2340", "TR: 2:00-3:15", "IC103"));
-        classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
-        classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
-        classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
-
-        adapter = new ClassCardAdapter(classCardList, this);
+        adapter = new ClassCardAdapter(Data.classCardList, this);
         recyclerView.setAdapter(adapter);
 
         Button addButton = view.findViewById(R.id.addButton);
@@ -103,7 +97,7 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                         if (classLocation.equals("")) classLocation=default_location;
 
                         // Add the new class to the ArrayList
-                        classCardList.add(new ClassCard(className, classTime, classLocation));
+                        Data.classCardList.add(new ClassCard(className, classTime, classLocation));
 
                         // Notify the adapter that the data has changed
                         adapter.notifyDataSetChanged();
@@ -136,9 +130,9 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
         Button buttonSaveClass = dialogView.findViewById(R.id.buttonSaveClass);
         Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
 
-        editTextClassName.setText(classCardList.get(position).getTitle());
-        editTextClassTime.setText(classCardList.get(position).getTime());
-        editTextClassLocation.setText(classCardList.get(position).getLocation());
+        editTextClassName.setText(Data.classCardList.get(position).getTitle());
+        editTextClassTime.setText(Data.classCardList.get(position).getTime());
+        editTextClassLocation.setText(Data.classCardList.get(position).getLocation());
 
         // Create and show the dialog
         AlertDialog dialog = builder.create();
@@ -157,9 +151,9 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                 if (classTime.equals("")) classTime=default_time;
                 if (classLocation.equals("")) classLocation=default_location;
 
-                classCardList.get(position).setTitle(className);
-                classCardList.get(position).setTime(classTime);
-                classCardList.get(position).setLocation(classLocation);
+                Data.classCardList.get(position).setTitle(className);
+                Data.classCardList.get(position).setTime(classTime);
+                Data.classCardList.get(position).setLocation(classLocation);
 
                 // Notify the adapter that the data has changed
                 adapter.notifyDataSetChanged();
@@ -181,7 +175,7 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
     @Override
     public void onDeleteButtonClick(int position) {
         // Remove the item from the list
-        classCardList.remove(position);
+        Data.classCardList.remove(position);
         // Notify the adapter of item removal
         adapter.notifyItemRemoved(position);
     }
