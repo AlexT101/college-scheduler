@@ -36,6 +36,9 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
     private TaskCardAdapter adapter;
     private List<TaskCard> taskCardList;
 
+    final String default_name = "Untitled Task";
+    final String default_time = "No TITLE";
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         NotificationsViewModel notificationsViewModel =
@@ -79,7 +82,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                 EditText editTextTaskName = dialogView.findViewById(R.id.editTaskName);
                 EditText editTextTaskTITLE = dialogView.findViewById(R.id.editTaskTITLE);
                 Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
-                Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelClass);
+                Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
 
                 // Create and show the dialog
                 AlertDialog dialog = builder.create();
