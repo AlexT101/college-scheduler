@@ -43,7 +43,7 @@
                 android:fontFamily="sans-serif-black"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView2"
+                app:layout_constraintBottom_toTopOf="@+id/textViewTime"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,10 +52,10 @@
                 android:id="@+id/textViewTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintBottom_toTopOf="@+id/textViewLocation"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
                 tools:layout_editor_absoluteX="159dp"
                 tools:layout_editor_absoluteY="35dp" />
 
@@ -63,10 +63,21 @@
                 android:id="@+id/textViewLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/textViewProf"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTime"
+                tools:layout_editor_absoluteX="179dp"
+                tools:layout_editor_absoluteY="65dp" />
+
+            <TextView
+                android:id="@+id/textViewProf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLocation"
                 tools:layout_editor_absoluteX="179dp"
                 tools:layout_editor_absoluteY="65dp" />
 

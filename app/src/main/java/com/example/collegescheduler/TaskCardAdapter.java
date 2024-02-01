@@ -36,9 +36,20 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
     @Override
     public void onBindViewHolder(TaskCardViewHolder holder, int position) {
         Item taskCard = taskCards.get(position);
-        holder.textViewToDoTitle.setText(taskCard.getTitle());
-        holder.textViewToDoTime.setText(taskCard.getTime() + " | " + taskCard.getDate());
-        holder.textViewToDoCourse.setText(taskCard.getCourse());
+        holder.textViewToDoTitle.setText(taskCard.getTitle().isEmpty() ? "Untitled" : taskCard.getTitle());
+        if (!taskCard.getTime().isEmpty() || !taskCard.getDate().isEmpty()) {
+            String separator = !taskCard.getTime().isEmpty() && !taskCard.getDate().isEmpty() ? " | " : "";
+
+            String textViewToDoTimeText = taskCard.getTime() + separator + taskCard.getDate();
+            holder.textViewToDoTime.setText(textViewToDoTimeText);
+        }else{
+            holder.textViewToDoTime.setVisibility(View.GONE);
+        }
+        if (!taskCard.getCourse().isEmpty()) {
+            holder.textViewToDoCourse.setText(taskCard.getCourse());
+        }else{
+            holder.textViewToDoCourse.setVisibility(View.GONE);
+        }
         holder.toDoDeleteButton.setOnClickListener(v -> {
             if (listener != null) {
                 int position1 = holder.getBindingAdapterPosition();

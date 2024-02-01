@@ -33,9 +33,6 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
 
     private RecyclerView recyclerView;
     private ClassCardAdapter adapter;
-    final String default_name = "Untitled Class";
-    final String default_time = "No Time";
-    final String default_location = "No Location";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,9 +70,14 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                 builder.setView(dialogView);
 
                 // Find views inside the dialog
-                EditText editTextClassName = dialogView.findViewById(R.id.editTextClassName);
+                EditText editTextClassTitle = dialogView.findViewById(R.id.editTextClassTitle);
                 EditText editTextClassTime = dialogView.findViewById(R.id.editTextClassTime);
+                EditText editTextClassRepeat = dialogView.findViewById(R.id.editTextClassRepeat);
+                EditText editTextClassRoom = dialogView.findViewById(R.id.editTextClassRoom);
                 EditText editTextClassLocation = dialogView.findViewById(R.id.editTextClassLocation);
+                EditText editTextClassSection = dialogView.findViewById(R.id.editTextClassSection);
+                EditText editTextClassProfessor = dialogView.findViewById(R.id.editTextClassProfessor);
+
                 Button buttonSaveClass = dialogView.findViewById(R.id.buttonSaveClass);
                 Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
 
@@ -88,16 +90,16 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                     @Override
                     public void onClick(View v) {
                         // Get the user input
-                        String className = editTextClassName.getText().toString();
+                        String classTitle = editTextClassTitle.getText().toString();
                         String classTime = editTextClassTime.getText().toString();
+                        String classRepeat = editTextClassRepeat.getText().toString();
+                        String classRoom = editTextClassRoom.getText().toString();
                         String classLocation = editTextClassLocation.getText().toString();
-
-                        if (className.equals("")) className=default_name;
-                        if (classTime.equals("")) classTime=default_time;
-                        if (classLocation.equals("")) classLocation=default_location;
+                        String classSection = editTextClassSection.getText().toString();
+                        String classProfessor = editTextClassProfessor.getText().toString();
 
                         // Add the new class to the ArrayList
-                        Data.classCardList.add(new ClassCard(className, classTime, classLocation));
+                        Data.classCardList.add(new ClassCard(classTitle, classTime, classLocation, classRepeat, classProfessor, classSection, classRoom));
 
                         // Notify the adapter that the data has changed
                         adapter.notifyDataSetChanged();
@@ -124,15 +126,23 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
         builder.setView(dialogView);
 
         // Find views inside the dialog
-        EditText editTextClassName = dialogView.findViewById(R.id.editTextClassName);
+        EditText editTextClassTitle = dialogView.findViewById(R.id.editTextClassTitle);
         EditText editTextClassTime = dialogView.findViewById(R.id.editTextClassTime);
+        EditText editTextClassRepeat = dialogView.findViewById(R.id.editTextClassRepeat);
+        EditText editTextClassRoom = dialogView.findViewById(R.id.editTextClassRoom);
         EditText editTextClassLocation = dialogView.findViewById(R.id.editTextClassLocation);
+        EditText editTextClassSection = dialogView.findViewById(R.id.editTextClassSection);
+        EditText editTextClassProfessor = dialogView.findViewById(R.id.editTextClassProfessor);
         Button buttonSaveClass = dialogView.findViewById(R.id.buttonSaveClass);
         Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
 
-        editTextClassName.setText(Data.classCardList.get(position).getTitle());
+        editTextClassTitle.setText(Data.classCardList.get(position).getTitle());
         editTextClassTime.setText(Data.classCardList.get(position).getTime());
+        editTextClassRepeat.setText(Data.classCardList.get(position).getRepeat());
+        editTextClassRoom.setText(Data.classCardList.get(position).getRoom());
         editTextClassLocation.setText(Data.classCardList.get(position).getLocation());
+        editTextClassSection.setText(Data.classCardList.get(position).getSection());
+        editTextClassProfessor.setText(Data.classCardList.get(position).getProfessor());
 
         // Create and show the dialog
         AlertDialog dialog = builder.create();
@@ -143,17 +153,21 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
             @Override
             public void onClick(View v) {
                 // Get the user input
-                String className = editTextClassName.getText().toString();
+                String classTitle = editTextClassTitle.getText().toString();
                 String classTime = editTextClassTime.getText().toString();
+                String classRepeat = editTextClassRepeat.getText().toString();
+                String classRoom = editTextClassRoom.getText().toString();
                 String classLocation = editTextClassLocation.getText().toString();
+                String classSection = editTextClassSection.getText().toString();
+                String classProfessor = editTextClassProfessor.getText().toString();
 
-                if (className.equals("")) className=default_name;
-                if (classTime.equals("")) classTime=default_time;
-                if (classLocation.equals("")) classLocation=default_location;
-
-                Data.classCardList.get(position).setTitle(className);
+                Data.classCardList.get(position).setTitle(classTitle);
                 Data.classCardList.get(position).setTime(classTime);
+                Data.classCardList.get(position).setRepeat(classRepeat);
+                Data.classCardList.get(position).setRoom(classRoom);
                 Data.classCardList.get(position).setLocation(classLocation);
+                Data.classCardList.get(position).setSection(classSection);
+                Data.classCardList.get(position).setProfessor(classProfessor);
 
                 // Notify the adapter that the data has changed
                 adapter.notifyDataSetChanged();

@@ -37,11 +37,6 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
     private RecyclerView recyclerView;
     private TaskCardAdapter adapter;
 
-    final String default_title = "Untitled Task";
-    final String default_time = "No Time";
-    final String default_date = "No Date";
-    final String default_course = "No Course";
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         NotificationsViewModel notificationsViewModel =
@@ -100,12 +95,6 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         String classDate = editTextDate.getText().toString();
                         String classCourse = editTextCourse.getText().toString();
 
-                        if (classTitle.equals("")) classTitle=default_title;
-                        if (classTime.equals("")) classTime=default_time;
-                        if (classDate.equals("")) classDate=default_date;
-                        if (classCourse.equals("")) classCourse=default_course;
-
-
                         // Add the new class to the ArrayList
                         Data.items.add(new Item("todo", classTitle, classDate, classTime, classCourse));
 
@@ -158,11 +147,6 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                 String classTime = editTextTime.getText().toString();
                 String classDate = editTextDate.getText().toString();
                 String classCourse = editTextCourse.getText().toString();
-
-                if (classTitle.equals("")) classTitle=default_title;
-                if (classTime.equals("")) classTime=default_time;
-                if (classDate.equals("")) classDate=default_date;
-                if (classCourse.equals("")) classCourse=default_course;
 
                 Data.items.get(position).setTitle(classTitle);
                 Data.items.get(position).setTime(classTime);

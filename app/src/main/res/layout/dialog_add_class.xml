@@ -27,7 +27,7 @@
 
 
         <EditText
-            android:id="@+id/editTextClassName"
+            android:id="@+id/editTextClassTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/default_name" />
@@ -39,10 +39,34 @@
             android:hint="@string/default_time" />
 
         <EditText
+            android:id="@+id/editTextClassRepeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Days" />
+
+        <EditText
+            android:id="@+id/editTextClassRoom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Room" />
+
+        <EditText
             android:id="@+id/editTextClassLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/default_location" />
+
+        <EditText
+            android:id="@+id/editTextClassSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Section" />
+
+        <EditText
+            android:id="@+id/editTextClassProfessor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Professor" />
 
         <Button
             android:id="@+id/buttonSaveClass"

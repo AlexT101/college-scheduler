@@ -37,9 +37,34 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
     @Override
     public void onBindViewHolder(ClassCardViewHolder holder, int position) {
         ClassCard classCard = classCards.get(position);
-        holder.textViewTitle.setText(classCard.getTitle());
-        holder.textViewTime.setText(classCard.getTime());
-        holder.textViewLocation.setText(classCard.getLocation());
+        holder.textViewTitle.setText(classCard.getTitle().isEmpty() ? "Untitled Class" : classCard.getTitle());
+        if (!classCard.getTime().isEmpty() || !classCard.getRepeat().isEmpty()) {
+            String separator = !classCard.getTime().isEmpty() && !classCard.getRepeat().isEmpty() ? " | " : "";
+
+            String textViewTimeText = classCard.getTime() + separator + classCard.getRepeat();
+            holder.textViewTime.setText(textViewTimeText);
+        } else {
+            holder.textViewTime.setVisibility(View.GONE);
+        }
+        if (!classCard.getLocation().isEmpty() || !classCard.getRoom().isEmpty()) {
+            String separator = !classCard.getLocation().isEmpty() && !classCard.getRoom().isEmpty() ? " " : "";
+            String roomPrecede = !classCard.getRoom().isEmpty() ? "Room " : "";
+
+            String textViewLocationText = classCard.getLocation() + separator + roomPrecede + classCard.getRoom();
+            holder.textViewLocation.setText(textViewLocationText);
+        } else {
+            holder.textViewLocation.setVisibility(View.GONE);
+        }
+        if (!classCard.getSection().isEmpty() || !classCard.getProfessor().isEmpty()) {
+            String sectionPrecede = !classCard.getSection().isEmpty() ? "Section " : "";
+            String professorPrecede = !classCard.getProfessor().isEmpty() ? "Prof. " : "";
+            String separator = !classCard.getSection().isEmpty() && !classCard.getProfessor().isEmpty() ? " | " : "";
+
+            String textViewProfText = sectionPrecede + classCard.getSection() + separator + professorPrecede + classCard.getProfessor();
+            holder.textViewProf.setText(textViewProfText);
+        } else {
+            holder.textViewProf.setVisibility(View.GONE);
+        }
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +95,7 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
     }
 
     static class ClassCardViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle, textViewTime, textViewLocation;
+        TextView textViewTitle, textViewTime, textViewLocation, textViewProf;
         ImageButton deleteButton, editButton;
 
         public ClassCardViewHolder(View itemView) {
@@ -78,6 +103,7 @@ public class ClassCardAdapter extends RecyclerView.Adapter<ClassCardAdapter.Clas
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewTime = itemView.findViewById(R.id.textViewTime);
             textViewLocation = itemView.findViewById(R.id.textViewLocation);
+            textViewProf = itemView.findViewById(R.id.textViewProf);
             deleteButton = itemView.findViewById(R.id.deleteButton);
             editButton = itemView.findViewById(R.id.editButton);
         }
