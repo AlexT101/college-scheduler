@@ -93,14 +93,14 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                     @Override
                     public void onClick(View v) {
                         // Get the user input
-                        String className = editTextTaskName.getText().toString();
-                        String classTime = editTextTaskTITLE.getText().toString();
+                        String taskName = editTextTaskName.getText().toString();
+                        String taskTITLE = editTextTaskTITLE.getText().toString();
 
-                        if (className.equals("")) className=default_name;
-                        if (classTime.equals("")) classTime=default_time;
+                        if (taskName.equals("")) taskName=default_name;
+                        if (taskTITLE.equals("")) taskTITLE=default_time;
 
                         // Add the new class to the ArrayList
-                        taskCardList.add(new TaskCard(className, classTime));
+                        taskCardList.add(new TaskCard(taskName, taskTITLE));
 
                         // Notify the adapter that the data has changed
                         adapter.notifyDataSetChanged();
