@@ -12,6 +12,7 @@
     <string name="Exam_Time">|Time: 06:00pm</string>
     <string name="Exam_Date">Date: 1/24/24</string>
     <string name="header">Exams</string>
+    <string name="cancel">Cancel</string>
     <string name="edit">Edit Class Info</string>
     <string name="delete">Delete Class</string>
     <string name="default_name">Class Name</string>
