@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.collegescheduler.ClassCard;
 import com.example.collegescheduler.ClassCardAdapter;
+import com.example.collegescheduler.Data;
 import com.example.collegescheduler.R;
 import com.example.collegescheduler.SpacesItemDecoration;
 import com.example.collegescheduler.databinding.FragmentHomeBinding;
@@ -32,7 +33,9 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
 
     private RecyclerView recyclerView;
     private ClassCardAdapter adapter;
-    private List<ClassCard> classCardList;
+    final String default_name = "Untitled Class";
+    final String default_time = "No Time";
+    final String default_location = "No Location";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,13 +59,7 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
-        classCardList = new ArrayList<>();
-        classCardList.add(new ClassCard("CS2340", "TR: 2:00-3:15", "IC103"));
-        classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
-        classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
-        classCardList.add(new ClassCard("CS1332", "MWF: 2:00-2:50", "CULC144"));
-
-        adapter = new ClassCardAdapter(classCardList, this);
+        adapter = new ClassCardAdapter(Data.classCardList, this);
         recyclerView.setAdapter(adapter);
 
         Button addButton = view.findViewById(R.id.addButton);
@@ -80,6 +77,7 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                 EditText editTextClassTime = dialogView.findViewById(R.id.editTextClassTime);
                 EditText editTextClassLocation = dialogView.findViewById(R.id.editTextClassLocation);
                 Button buttonSaveClass = dialogView.findViewById(R.id.buttonSaveClass);
+                Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
 
                 // Create and show the dialog
                 AlertDialog dialog = builder.create();
@@ -94,8 +92,12 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                         String classTime = editTextClassTime.getText().toString();
                         String classLocation = editTextClassLocation.getText().toString();
 
+                        if (className.equals("")) className=default_name;
+                        if (classTime.equals("")) classTime=default_time;
+                        if (classLocation.equals("")) classLocation=default_location;
+
                         // Add the new class to the ArrayList
-                        classCardList.add(new ClassCard(className, classTime, classLocation));
+                        Data.classCardList.add(new ClassCard(className, classTime, classLocation));
 
                         // Notify the adapter that the data has changed
                         adapter.notifyDataSetChanged();
@@ -104,14 +106,76 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
                         dialog.dismiss();
                     }
                 });
+                buttonCancelClass.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
 
     }
     @Override
+    public void onEditButtonClick(int position) {
+        // Inflate the dialog layout
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_class, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(dialogView);
+
+        // Find views inside the dialog
+        EditText editTextClassName = dialogView.findViewById(R.id.editTextClassName);
+        EditText editTextClassTime = dialogView.findViewById(R.id.editTextClassTime);
+        EditText editTextClassLocation = dialogView.findViewById(R.id.editTextClassLocation);
+        Button buttonSaveClass = dialogView.findViewById(R.id.buttonSaveClass);
+        Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
+
+        editTextClassName.setText(Data.classCardList.get(position).getTitle());
+        editTextClassTime.setText(Data.classCardList.get(position).getTime());
+        editTextClassLocation.setText(Data.classCardList.get(position).getLocation());
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Handle the save button click
+        buttonSaveClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the user input
+                String className = editTextClassName.getText().toString();
+                String classTime = editTextClassTime.getText().toString();
+                String classLocation = editTextClassLocation.getText().toString();
+
+                if (className.equals("")) className=default_name;
+                if (classTime.equals("")) classTime=default_time;
+                if (classLocation.equals("")) classLocation=default_location;
+
+                Data.classCardList.get(position).setTitle(className);
+                Data.classCardList.get(position).setTime(classTime);
+                Data.classCardList.get(position).setLocation(classLocation);
+
+                // Notify the adapter that the data has changed
+                adapter.notifyDataSetChanged();
+
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+        buttonCancelClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        // Notify the adapter of item removal
+        adapter.notifyItemChanged(position);
+    }
+
+    @Override
     public void onDeleteButtonClick(int position) {
         // Remove the item from the list
-        classCardList.remove(position);
+        Data.classCardList.remove(position);
         // Notify the adapter of item removal
         adapter.notifyItemRemoved(position);
     }

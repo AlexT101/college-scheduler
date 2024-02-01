@@ -74,6 +74,7 @@
 
         <ImageButton
             android:id="@+id/editButton"
+            android:contentDescription="@string/edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
@@ -88,6 +89,7 @@
 
         <ImageButton
             android:id="@+id/deleteButton"
+            android:contentDescription="@string/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
