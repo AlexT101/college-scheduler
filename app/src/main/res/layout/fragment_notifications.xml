@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:paddingBottom="?attr/actionBarSize"
         >
-
         <TextView
             android:id="@+id/text_notifications"
             android:layout_width="match_parent"
@@ -27,12 +26,34 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_alignParentTop="true" />
+        <LinearLayout
+            android:id="@+id/filterHolder"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/text_notifications"
+            android:gravity="center_vertical"
+            android:layout_margin="16dp">
+            <TextView
+                android:id="@+id/filterDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filter By: "
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:textColor="@color/black"/>
+            <Spinner
+                android:id="@+id/spinnerFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewToDo"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_notifications"
+            android:layout_below="@+id/filterHolder"
             android:nestedScrollingEnabled="false"/>
 
         <Button

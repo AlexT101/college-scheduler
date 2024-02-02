@@ -21,4 +21,10 @@
     <string name="save">Save Class</string>
     <string name="class_info">Class Info</string>
     <string name="title_assignments">Assignments</string>
+    <string-array name="filter_options">
+        <item>None</item>
+        <item>Name</item>
+        <item>Due Date</item>
+        <item>Course</item>
+    </string-array>
 </resources>

@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,19 +27,62 @@ import com.example.collegescheduler.Data;
 import com.example.collegescheduler.R;
 import com.example.collegescheduler.SpacesItemDecoration;
 import com.example.collegescheduler.databinding.FragmentNotificationsBinding;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 
-public class NotificationsFragment extends Fragment implements TaskCardAdapter.OnDeleteButtonClickListener {
+public class NotificationsFragment extends Fragment implements TaskCardAdapter.OnDeleteButtonClickListener, OnItemSelectedListener {
 
     private FragmentNotificationsBinding binding;
 
     private RecyclerView recyclerView;
+    private Spinner filter;
     private TaskCardAdapter adapter;
 
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        switch((String)parent.getItemAtPosition(pos)){
+            case "Name":
+                Collections.sort(Data.items, new Comparator<Item>() {
+                    @Override
+                    public int compare(Item item1, Item item2) {
+                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+                        return item1.getTitle().compareTo(item2.getTitle());
+                    }
+                });
+                adapter.notifyDataSetChanged();
+                break;
+            case "Due Date":
+                Collections.sort(Data.items, new Comparator<Item>() {
+                    @Override
+                    public int compare(Item item1, Item item2) {
+                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+                        return item1.getDate().compareTo(item2.getDate());
+                    }
+                });
+                adapter.notifyDataSetChanged();
+                break;
+            case "Course":
+                Collections.sort(Data.items, new Comparator<Item>() {
+                    @Override
+                    public int compare(Item item1, Item item2) {
+                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+                        return item1.getCourse().compareTo(item2.getCourse());
+                    }
+                });
+                adapter.notifyDataSetChanged();
+                break;
+        }
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback.
+    }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         NotificationsViewModel notificationsViewModel =
@@ -53,6 +99,20 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
     public void onViewCreated(View view, @Nullable Bundle savedInstance) {
 
         view = getView();
+
+        filter = view.findViewById(R.id.spinnerFilter);
+        filter.setOnItemSelectedListener(this);
+
+        ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(
+                getActivity(),
+                R.array.filter_options,
+                android.R.layout.simple_spinner_item
+        );
+
+        // Specify the layout to use when the list of choices appears.
+        filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner.
+        filter.setAdapter(filterAdapter);
 
         recyclerView = view.findViewById(R.id.recyclerViewToDo);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
