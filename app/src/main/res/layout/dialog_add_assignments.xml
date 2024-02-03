@@ -18,7 +18,7 @@
         android:padding="16dp">
         <TextView
             android:id="@+id/textViewDescription"
-            android:text="@string/exam_info"
+            android:text="Assignment Info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
@@ -27,43 +27,37 @@
 
 
         <EditText
-            android:id="@+id/editTextExamTitle"
+            android:id="@+id/editTextAssignmentTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/default_ExamName" />
+            android:hint="@string/Assignment_name_default" />
 
         <EditText
-            android:id="@+id/editTextExamCourse"
+            android:id="@+id/editTextAssignmentCourse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Course" />
+            android:hint="@string/Assignment_course_default" />
 
         <EditText
-            android:id="@+id/editTextExamTime"
+            android:id="@+id/editTextAssignmentDue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/default_ExamTime" />
+            android:hint="@string/Assignment_due_date_default" />
 
         <EditText
-            android:id="@+id/editTextExamDay"
+            android:id="@+id/editTextAssignmentTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/exam_day_default" />
-
-        <EditText
-            android:id="@+id/editTextExamLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/exam_location_default" />
+            android:hint="@string/assignment_time" />
 
         <Button
-            android:id="@+id/buttonSaveExam"
+            android:id="@+id/buttonSaveAssignment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/save" />
 
         <Button
-            android:id="@+id/buttonCancelExam"
+            android:id="@+id/buttonCancelAssignment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/cancel"

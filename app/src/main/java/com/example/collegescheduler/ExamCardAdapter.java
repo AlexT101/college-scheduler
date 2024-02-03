@@ -1,5 +1,6 @@
 package com.example.collegescheduler;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,11 +43,13 @@ public class ExamCardAdapter extends RecyclerView.Adapter<ExamCardAdapter.ExamCa
                     && !examCard.getTime().isEmpty() ? " | " : "";
 
             String textViewTimeText = examCard.getLocation() + separator + examCard.getDate() + separator + examCard.getTime();
-            holder.textViewTime.setText(textViewTimeText);
-            holder.textViewTime.setVisibility(View.VISIBLE);
+            holder.textViewDetails.setText(textViewTimeText);
+            holder.textViewDetails.setVisibility(View.VISIBLE);
         } else {
-            holder.textViewTime.setVisibility(View.GONE);
+            holder.textViewDetails.setVisibility(View.GONE);
         }
+
+        Log.d("MyApp", "Location: " + examCard.getLocation());
 
 
         if (!examCard.getCourse().isEmpty()) {
@@ -88,15 +91,13 @@ public class ExamCardAdapter extends RecyclerView.Adapter<ExamCardAdapter.ExamCa
     }
 
     static class ExamCardViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle, textViewTime, textViewLocation, textViewDate, textViewCourse;
+        TextView textViewTitle, textViewDetails, textViewCourse;
         ImageButton examDeleteButton, examEditButton;
 
         public ExamCardViewHolder(View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.exam_Title);
-            textViewTime = itemView.findViewById(R.id.exam_Time);
-            textViewLocation = itemView.findViewById(R.id.exam_Location);
-            textViewDate = itemView.findViewById(R.id.exam_Date);
+            textViewDetails = itemView.findViewById(R.id.exam_details);
             textViewCourse = itemView.findViewById(R.id.exam_Course);
             examDeleteButton = itemView.findViewById(R.id.examEdit);
             examEditButton = itemView.findViewById(R.id.examComplete);

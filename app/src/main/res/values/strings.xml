@@ -26,6 +26,16 @@
     <string name="exam_info">Exam Info</string>
     <string name="default_ExamName">Exam Name</string>
     <string name="default_ExamTime">Exam Time</string>
+    <string name="exam_day_default">Exam Day</string>
+    <string name="exam_location_default">Location</string>
+    <string name="Assignment_due_date_default">Due Date</string>
+    <string name="Assignment_course_default">Course</string>
+    <string name="Assignment_name_default">Assignment Name</string>
+    <string name="assignment_course" />
+    <string name="assignment_header">Assignment List</string>
+    <string name="filter_by">Filter By:</string>
+    <string name="add_assignment_button">Add Assignment</string>
+    <string name="assignment_time">Time</string>
     <string-array name="filter_options">
         <item>None</item>
         <item>Name</item>
