@@ -1,0 +1,73 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    app:cardElevation="10dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:text="@string/exam_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+
+        <EditText
+            android:id="@+id/editTextExamTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/default_ExamName" />
+
+        <EditText
+            android:id="@+id/editTextExamCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Course" />
+
+        <EditText
+            android:id="@+id/editTextExamTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/default_ExamTime" />
+
+        <EditText
+            android:id="@+id/editTextExamDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/exam_day_default" />
+
+        <EditText
+            android:id="@+id/editTextExamLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/exam_location_default" />
+
+        <Button
+            android:id="@+id/buttonSaveExam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/buttonCancelExam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            app:backgroundTint="@color/red"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

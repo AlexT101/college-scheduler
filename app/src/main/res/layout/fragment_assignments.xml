@@ -13,20 +13,64 @@
         android:orientation="vertical"
         android:paddingBottom="?attr/actionBarSize"
         >
-
         <TextView
-            android:id="@+id/text_assignments"
+            android:id="@+id/assignment_Header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:text="This is Assignments Fragment"
+            android:text="@string/assignment_header"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_alignParentTop="true" />
+
+        <LinearLayout
+            android:id="@+id/filterHolderAssignment"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@+id/assignment_Header"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/filterDescriptionAssignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_by"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spinnerFilterAssignment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewAssignment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/filterHolderAssignment"
+            android:layout_alignParentStart="true"
+            android:nestedScrollingEnabled="false" />
+
+        <Button
+            android:id="@+id/addButtonAssignment"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/add_assignment_button"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/recyclerViewAssignment" />
 
     </RelativeLayout>
 
