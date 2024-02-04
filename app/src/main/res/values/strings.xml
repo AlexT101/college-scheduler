@@ -1,17 +1,17 @@
 <resources>
     <string name="app_name">CollegeScheduler</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">To-Do List</string>
-    <string name="tasks">ToDo List</string>
-    <string name="classes">Classes</string>
+    <string name="title_classes">Classes</string>
+    <string name="title_exams">Exams</string>
+    <string name="title_assignments">Assignments</string>
+    <string name="title_notifications">To-Do</string>
+
+    <string name="header_classes">Class List</string>
+    <string name="header_exams">Exam List</string>
+    <string name="header_assignments">Assignment List</string>
+    <string name="header_todos">To-Do List</string>
+
     <string name="add">Add Class</string>
     <string name="addTask">Add Task</string>
-    <string name="Exam_Title">Miderm 1</string>
-    <string name="Exam_Location">CULC 144</string>
-    <string name="Exam_Time">6:00pm</string>
-    <string name="Exam_Date">1/24/24</string>
-    <string name="header">Exams</string>
     <string name="cancel">Cancel</string>
     <string name="edit">Edit Class Info</string>
     <string name="delete">Delete Class</string>
@@ -20,9 +20,6 @@
     <string name="default_location">Class Location</string>
     <string name="save">Save Class</string>
     <string name="class_info">Class Info</string>
-    <string name="title_assignments">Assignments</string>
-    <string name="exam_header">Exam List</string>
-    <string name="Exam_Course">CS 1332</string>
     <string name="exam_info">Exam Info</string>
     <string name="default_ExamName">Exam Name</string>
     <string name="default_ExamTime">Exam Time</string>
@@ -31,8 +28,6 @@
     <string name="Assignment_due_date_default">Due Date</string>
     <string name="Assignment_course_default">Course</string>
     <string name="Assignment_name_default">Assignment Name</string>
-    <string name="assignment_course" />
-    <string name="assignment_header">Assignment List</string>
     <string name="filter_by">Filter By:</string>
     <string name="add_assignment_button">Add Assignment</string>
     <string name="assignment_time">Time</string>

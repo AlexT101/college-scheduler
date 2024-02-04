@@ -20,7 +20,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/assignment_header"
+            android:text="@string/header_assignments"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="24sp"
