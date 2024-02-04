@@ -41,6 +41,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
     private FragmentNotificationsBinding binding;
 
     private RecyclerView recyclerView;
+
     private Spinner filter;
     private TaskCardAdapter adapter;
 
@@ -116,12 +117,12 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         adapter = new TaskCardAdapter(Data.items, this);
         recyclerView.setAdapter(adapter);
 
         Button addButton = view.findViewById(R.id.addButtonToDo);
+        Button showComplete = view.findViewById(R.id.showCompleted);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +170,28 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         dialog.dismiss();
                     }
                 });
+            }
+        });
+        showComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Inflate the dialog layout
+                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.completed_tasks, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setView(dialogView);
 
+                Button closeTab = dialogView.findViewById(R.id.closeCompletedTasks);
+
+                // Create and show the dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                closeTab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
     }
@@ -230,8 +252,15 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
 
     @Override
     public void onDeleteButtonClick(int position) {
+
+        String Title = Data.items.get(position).getTitle();
+        String Time = Data.items.get(position).getTime();
+        String Date = Data.items.get(position).getDate();
+        String Course = Data.items.get(position).getCourse();
+
+        Data.completedItems.add(new Item("todo", Title, Time, Date, Course));
         // Remove the item from the list
-        Data.items.remove(position);
+        Data.items.remove(position);S
         // Notify the adapter of item removal
         adapter.notifyItemRemoved(position);
     }

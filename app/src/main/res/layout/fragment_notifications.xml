@@ -46,6 +46,7 @@
                 android:id="@+id/spinnerFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </LinearLayout>
 
 
@@ -64,6 +65,14 @@
             android:text="@string/addTask"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/recyclerViewToDo" />
+
+        <Button
+            android:id="@+id/showCompleted"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:text="Show Completed Tasks"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/addButtonToDo"/>
 
     </RelativeLayout>
 

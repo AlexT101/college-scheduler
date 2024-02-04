@@ -229,7 +229,7 @@ public class AssignmentsFragment extends Fragment implements AssignmentCardAdapt
         // Remove the item from the list
         Data.items.remove(position);
         // Notify the adapter of item removal
-        adapter.notifyDataSetChanged();
+        adapter.notifyItemRemoved(position);
     }
 
     @Override
