@@ -11,12 +11,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class AssignmentCardAdapter extends RecyclerView.Adapter<AssignmentCardAdapter.AssignmentCardViewHolder> {
 
     private List<Item> assignmentCards;
+    private List <Item> displayedCards;
+    private HashMap<Integer, Integer> indexMap;
     private AssignmentCardAdapter.OnDeleteButtonClickListener listener;
 
     public interface OnDeleteButtonClickListener {
@@ -26,8 +29,28 @@ public class AssignmentCardAdapter extends RecyclerView.Adapter<AssignmentCardAd
 
     public AssignmentCardAdapter(List<Item> assignmentCards, AssignmentCardAdapter.OnDeleteButtonClickListener listener) {
 
-        this.assignmentCards = assignmentCards;
+        this.assignmentCards = new ArrayList<>(assignmentCards);
+        this.displayedCards = new ArrayList<>();
+        this.indexMap = new HashMap<>();
+        filterItems();
         this.listener = listener;
+    }
+
+    private void filterItems() {
+        displayedCards.clear();
+        for (int i = 0; i < assignmentCards.size(); i ++) {
+            if (assignmentCards.get(i).getType().equals("assignment")) {
+                displayedCards.add(assignmentCards.get(i));
+                indexMap.put(displayedCards.size() - 1, i);
+            }
+        }
+    }
+
+    public void updateItems(List<Item> newItems) {
+        assignmentCards.clear();
+        assignmentCards.addAll(newItems);
+        filterItems();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -38,7 +61,7 @@ public class AssignmentCardAdapter extends RecyclerView.Adapter<AssignmentCardAd
 
     @Override
     public void onBindViewHolder(AssignmentCardViewHolder holder, int position) {
-        Item assignmentCard = assignmentCards.get(position);
+        Item assignmentCard = displayedCards.get(position);
         holder.textViewTitle.setText(assignmentCard.getTitle().isEmpty() ? "Untitled Assignment" : assignmentCard.getTitle());
 
         if (!assignmentCard.getDate().isEmpty() || !assignmentCard.getTime().isEmpty()) {
@@ -65,7 +88,7 @@ public class AssignmentCardAdapter extends RecyclerView.Adapter<AssignmentCardAd
                 if (listener != null) {
                     int position = holder.getBindingAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        listener.onDeleteButtonClick(position);
+                        listener.onDeleteButtonClick(indexMap.get(position));
                     }
                 }
             }
@@ -77,7 +100,7 @@ public class AssignmentCardAdapter extends RecyclerView.Adapter<AssignmentCardAd
                 if (listener != null) {
                     int position = holder.getBindingAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        listener.onEditButtonClick(position);
+                        listener.onEditButtonClick(indexMap.get(position));
                     }
                 }
             }
@@ -87,7 +110,7 @@ public class AssignmentCardAdapter extends RecyclerView.Adapter<AssignmentCardAd
 
     @Override
     public int getItemCount() {
-        return assignmentCards.size();
+        return displayedCards.size();
     }
 
     static class AssignmentCardViewHolder extends RecyclerView.ViewHolder {

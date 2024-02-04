@@ -9,11 +9,15 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ExamCardAdapter extends RecyclerView.Adapter<ExamCardAdapter.ExamCardViewHolder> {
 
     private List<Item> examCards;
+    private List <Item> displayedCards;
+    private HashMap<Integer, Integer> indexMap;
     private ExamCardAdapter.OnDeleteButtonClickListener listener;
 
     public interface OnDeleteButtonClickListener {
@@ -23,8 +27,28 @@ public class ExamCardAdapter extends RecyclerView.Adapter<ExamCardAdapter.ExamCa
 
     public ExamCardAdapter(List<Item> examCards, ExamCardAdapter.OnDeleteButtonClickListener listener) {
 
-        this.examCards = examCards;
+        this.examCards = new ArrayList<>(examCards);
+        this.displayedCards = new ArrayList<>();
+        this.indexMap = new HashMap<>();
+        filterItems();
         this.listener = listener;
+    }
+
+    private void filterItems() {
+        displayedCards.clear();
+        for (int i = 0; i < examCards.size(); i ++) {
+            if (examCards.get(i).getType().equals("exam")) {
+                displayedCards.add(examCards.get(i));
+                indexMap.put(displayedCards.size() - 1, i);
+            }
+        }
+    }
+
+    public void updateItems(List<Item> newItems) {
+        examCards.clear();
+        examCards.addAll(newItems);
+        filterItems();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -35,7 +59,7 @@ public class ExamCardAdapter extends RecyclerView.Adapter<ExamCardAdapter.ExamCa
 
     @Override
     public void onBindViewHolder(ExamCardViewHolder holder, int position) {
-        Item examCard = examCards.get(position);
+        Item examCard = displayedCards.get(position);
         holder.textViewTitle.setText(examCard.getTitle().isEmpty() ? "Untitled Exam" : examCard.getTitle());
 
         if (!examCard.getLocation().isEmpty() || !examCard.getDate().isEmpty() || !examCard.getTime().isEmpty()) {
@@ -65,7 +89,7 @@ public class ExamCardAdapter extends RecyclerView.Adapter<ExamCardAdapter.ExamCa
                 if (listener != null) {
                     int position = holder.getBindingAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        listener.onDeleteButtonClick(position);
+                        listener.onDeleteButtonClick(indexMap.get(position));
                     }
                 }
             }
@@ -77,7 +101,7 @@ public class ExamCardAdapter extends RecyclerView.Adapter<ExamCardAdapter.ExamCa
                 if (listener != null) {
                     int position = holder.getBindingAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        listener.onEditButtonClick(position);
+                        listener.onEditButtonClick(indexMap.get(position));
                     }
                 }
             }
@@ -87,7 +111,7 @@ public class ExamCardAdapter extends RecyclerView.Adapter<ExamCardAdapter.ExamCa
 
     @Override
     public int getItemCount() {
-        return examCards.size();
+        return displayedCards.size();
     }
 
     static class ExamCardViewHolder extends RecyclerView.ViewHolder {
