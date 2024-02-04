@@ -186,10 +186,30 @@ public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteB
 
     @Override
     public void onDeleteButtonClick(int position) {
-        // Remove the item from the list
-        Data.classCardList.remove(position);
-        // Notify the adapter of item removal
-        adapter.notifyItemRemoved(position);
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.delete_confirmation, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(dialogView);
+
+        Button buttonDeleteConfirmed = dialogView.findViewById(R.id.deleteConfirmed);
+        Button buttonDeleteCancel = dialogView.findViewById(R.id.deleteCancel);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        buttonDeleteConfirmed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Data.classCardList.remove(position);
+                adapter.notifyItemRemoved(position);
+                dialog.dismiss();
+            }
+        });
+        buttonDeleteCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
