@@ -36,7 +36,7 @@ public class ExamCardAdapter extends RecyclerView.Adapter<ExamCardAdapter.ExamCa
     @Override
     public void onBindViewHolder(ExamCardViewHolder holder, int position) {
         Item examCard = examCards.get(position);
-        holder.textViewTitle.setText(examCard.getTitle().isEmpty() ? "Untitled Class" : examCard.getTitle());
+        holder.textViewTitle.setText(examCard.getTitle().isEmpty() ? "Untitled Exam" : examCard.getTitle());
 
         if (!examCard.getLocation().isEmpty() || !examCard.getDate().isEmpty() || !examCard.getTime().isEmpty()) {
             String separator = !examCard.getLocation().isEmpty() && !examCard.getDate().isEmpty()

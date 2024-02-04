@@ -149,7 +149,7 @@ public class AssignmentsFragment extends Fragment implements AssignmentCardAdapt
                         String classTime = editTextTime.getText().toString();
 
                         // Add the new class to the ArrayList
-                        Data.items.add(new Item("assignments", classTitle, classDate, classTitle, classCourse));
+                        Data.items.add(new Item("assignment", classTitle, classDate, classTime, classCourse));
 
                         // Notify the adapter that the data has changed
                         adapter.notifyItemInserted(Data.items.size() - 1);

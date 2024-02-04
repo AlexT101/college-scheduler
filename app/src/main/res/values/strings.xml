@@ -36,6 +36,10 @@
     <string name="filter_by">Filter By:</string>
     <string name="add_assignment_button">Add Assignment</string>
     <string name="assignment_time">Time</string>
+    <string name="assignment_info">Assignment Info</string>
+    <string name="save_assignment">Save Assignment</string>
+    <string name="course">Course</string>
+    <string name="save_exam">Save Exam</string>
     <string-array name="filter_options">
         <item>None</item>
         <item>Name</item>

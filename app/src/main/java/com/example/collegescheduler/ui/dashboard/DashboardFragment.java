@@ -154,7 +154,7 @@ public class DashboardFragment extends Fragment implements ExamCardAdapter.OnDel
                         String classLocation = editTextLocation.getText().toString();
 
                         // Add the new class to the ArrayList
-                        Data.items.add(new Item("Exam", classTitle, classDate, classTime, classCourse, classLocation));
+                        Data.items.add(new Item("exam", classTitle, classDate, classTime, classCourse, classLocation));
 
                         // Notify the adapter that the data has changed
                         adapter.notifyItemInserted(Data.items.size() - 1);

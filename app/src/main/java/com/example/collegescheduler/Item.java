@@ -18,6 +18,7 @@ public class Item {
         this.time = time;
         this.course = course;
         this.complete = false;
+        this.location = "";
     }
 
     //Constructor for exams (additional parameter for setting exam location)

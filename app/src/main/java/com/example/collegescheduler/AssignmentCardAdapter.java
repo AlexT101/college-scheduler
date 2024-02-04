@@ -4,12 +4,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AssignmentCardAdapter extends RecyclerView.Adapter<AssignmentCardAdapter.AssignmentCardViewHolder> {
 
@@ -36,7 +39,7 @@ public class AssignmentCardAdapter extends RecyclerView.Adapter<AssignmentCardAd
     @Override
     public void onBindViewHolder(AssignmentCardViewHolder holder, int position) {
         Item assignmentCard = assignmentCards.get(position);
-        holder.textViewTitle.setText(assignmentCard.getTitle().isEmpty() ? "Untitled Class" : assignmentCard.getTitle());
+        holder.textViewTitle.setText(assignmentCard.getTitle().isEmpty() ? "Untitled Assignment" : assignmentCard.getTitle());
 
         if (!assignmentCard.getDate().isEmpty() || !assignmentCard.getTime().isEmpty()) {
             String separator = !assignmentCard.getDate().isEmpty() && !assignmentCard.getTime().isEmpty() ? " | " : "";

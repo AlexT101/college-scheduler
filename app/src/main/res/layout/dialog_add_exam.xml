@@ -36,7 +36,7 @@
             android:id="@+id/editTextExamCourse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Course" />
+            android:hint="@string/course" />
 
         <EditText
             android:id="@+id/editTextExamTime"
@@ -60,7 +60,7 @@
             android:id="@+id/buttonSaveExam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/save" />
+            android:text="@string/save_exam" />
 
         <Button
             android:id="@+id/buttonCancelExam"
