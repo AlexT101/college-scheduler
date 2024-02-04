@@ -17,12 +17,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <EditText
+
+        <TextView
             android:id="@+id/confirmation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="   Are you sure you want to delete this class?" />
-
+            android:text="Are you sure?"
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/deleteConfirmed"
