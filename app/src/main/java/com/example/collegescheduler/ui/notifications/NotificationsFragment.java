@@ -260,7 +260,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
 
         Data.completedItems.add(new Item("todo", Title, Time, Date, Course));
         // Remove the item from the list
-        Data.items.remove(position);S
+        Data.items.remove(position);
         // Notify the adapter of item removal
         adapter.notifyItemRemoved(position);
     }
