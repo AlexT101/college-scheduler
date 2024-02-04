@@ -7,7 +7,7 @@ import java.util.List;
 public class Data {
     public static List<ClassCard> classCardList = new ArrayList<>();
     public static List<Item> items = new ArrayList<>(); //Store all todos, exams, and assignments here and filter as needed
-    public static List<Item> completedItems = new ArrayList<>();
+    public static boolean showComplete = true;
     public static ArrayList<String> getAllClasses(){
         ArrayList<String> temp = new ArrayList<>();
         for (int i = 0; i < classCardList.size(); i ++){

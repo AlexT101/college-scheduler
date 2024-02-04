@@ -208,7 +208,7 @@ public class AssignmentsFragment extends Fragment implements AssignmentCardAdapt
                 Data.items.get(position).setCourse(classCourse);
 
                 // Notify the adapter that the data has changed
-                adapter.notifyDataSetChanged();
+                adapter.updateItems(Data.items);
 
                 // Dismiss the dialog
                 dialog.dismiss();
@@ -220,8 +220,6 @@ public class AssignmentsFragment extends Fragment implements AssignmentCardAdapt
                 dialog.dismiss();
             }
         });
-        // Notify the adapter of item removal
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -229,7 +227,7 @@ public class AssignmentsFragment extends Fragment implements AssignmentCardAdapt
         // Remove the item from the list
         Data.items.remove(position);
         // Notify the adapter of item removal
-        adapter.notifyItemRemoved(position);
+        adapter.updateItems(Data.items);
     }
 
     @Override

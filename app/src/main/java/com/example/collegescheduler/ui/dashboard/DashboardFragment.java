@@ -217,7 +217,7 @@ public class DashboardFragment extends Fragment implements ExamCardAdapter.OnDel
                 Data.items.get(position).setCourse(classLocation);
 
                 // Notify the adapter that the data has changed
-                adapter.notifyDataSetChanged();
+                adapter.updateItems(Data.items);
 
                 // Dismiss the dialog
                 dialog.dismiss();
@@ -229,8 +229,6 @@ public class DashboardFragment extends Fragment implements ExamCardAdapter.OnDel
                 dialog.dismiss();
             }
         });
-        // Notify the adapter of item removal
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -238,7 +236,7 @@ public class DashboardFragment extends Fragment implements ExamCardAdapter.OnDel
         // Remove the item from the list
         Data.items.remove(position);
         // Notify the adapter of item removal
-        adapter.notifyItemRemoved(position);
+        adapter.updateItems(Data.items);
     }
 
     @Override

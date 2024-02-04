@@ -49,12 +49,20 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/showCompleted"
+            android:layout_width="192dp"
+            android:layout_height="wrap_content"
+            android:text="Hide Complete"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/filterHolder"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewToDo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/filterHolder"
+            android:layout_below="@+id/showCompleted"
             android:nestedScrollingEnabled="false"/>
 
         <Button
@@ -65,14 +73,6 @@
             android:text="@string/addTask"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/recyclerViewToDo" />
-
-        <Button
-            android:id="@+id/showCompleted"
-            android:layout_width="128dp"
-            android:layout_height="wrap_content"
-            android:text="Show Completed Tasks"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/addButtonToDo"/>
 
     </RelativeLayout>
 

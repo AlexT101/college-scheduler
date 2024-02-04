@@ -1,13 +1,17 @@
 package com.example.collegescheduler;
 
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.collegescheduler.TaskCard;
@@ -15,6 +19,8 @@ import com.example.collegescheduler.R;
 
 public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCardViewHolder> {
     private List<Item> taskCards;
+    private List<Item> displayedCards;
+    private HashMap<Integer, Integer> indexMap;
     private OnDeleteButtonClickListener listener;
 
     public interface OnDeleteButtonClickListener {
@@ -23,8 +29,29 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
     }
 
     public TaskCardAdapter(List<Item> taskCards, OnDeleteButtonClickListener listener) {
-        this.taskCards = taskCards;
+        this.taskCards = new ArrayList<>(taskCards);
+        this.displayedCards = new ArrayList<>();
+        this.indexMap = new HashMap<>();
+        filterItems();
         this.listener = listener;
+    }
+
+    public void filterItems() {
+        displayedCards.clear();
+        for (int i = 0; i < taskCards.size(); i ++) {
+            if (Data.showComplete || !taskCards.get(i).getComplete()) {
+                displayedCards.add(taskCards.get(i));
+                indexMap.put(displayedCards.size() - 1, i);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void updateItems(List<Item> newItems) {
+        taskCards.clear();
+        taskCards.addAll(newItems);
+        filterItems();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -35,8 +62,16 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
 
     @Override
     public void onBindViewHolder(TaskCardViewHolder holder, int position) {
-        Item taskCard = taskCards.get(position);
-        holder.textViewToDoTitle.setText(taskCard.getTitle().isEmpty() ? "Untitled" : taskCard.getTitle());
+        Item taskCard = displayedCards.get(position);
+
+        if (taskCard.getComplete()) {
+            holder.toDoDeleteButton.setImageResource(R.drawable.ic_notifications_black_24dp);
+        }else {
+            holder.toDoDeleteButton.setImageResource(R.drawable.outline_circle_24);
+        }
+
+        String title = taskCard.getTitle().isEmpty() ? "Untitled" : taskCard.getTitle();
+        holder.textViewToDoTitle.setText(title);
         if (!taskCard.getTime().isEmpty() || !taskCard.getDate().isEmpty()) {
             String separator = !taskCard.getTime().isEmpty() && !taskCard.getDate().isEmpty() ? " | " : "";
 
@@ -56,7 +91,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
             if (listener != null) {
                 int position1 = holder.getBindingAdapterPosition();
                 if (position1 != RecyclerView.NO_POSITION) {
-                    listener.onDeleteButtonClick(position1);
+                    listener.onDeleteButtonClick(indexMap.get(position1));
                 }
             }
         });
@@ -66,7 +101,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
                 if (listener != null) {
                     int position = holder.getBindingAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        listener.onEditButtonClick(position);
+                        listener.onEditButtonClick(indexMap.get(position));
                     }
                 }
             }
@@ -75,10 +110,11 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
 
     @Override
     public int getItemCount() {
-        return taskCards.size();
+        return displayedCards.size();
     }
 
     static class TaskCardViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout toDoCard;
         TextView textViewToDoTitle, textViewToDoTime, textViewToDoCourse;
         ImageButton toDoDeleteButton, toDoEditButton;
 
@@ -89,6 +125,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
             textViewToDoCourse = itemView.findViewById(R.id.textViewTaskCourse);
             toDoDeleteButton = itemView.findViewById(R.id.toDoDeleteButton);
             toDoEditButton = itemView.findViewById(R.id.toDoEditButton);
+            toDoCard = itemView.findViewById(R.id.toDoCard);
 
         }
     }

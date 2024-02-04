@@ -158,7 +158,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         Data.items.add(new Item("todo", classTitle, classDate, classTime, classCourse));
 
                         // Notify the adapter that the data has changed
-                        adapter.notifyItemInserted(Data.items.size()-1);
+                        adapter.updateItems(Data.items);
 
                         // Dismiss the dialog
                         dialog.dismiss();
@@ -175,23 +175,13 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
         showComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Inflate the dialog layout
-                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.completed_tasks, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setView(dialogView);
-
-                Button closeTab = dialogView.findViewById(R.id.closeCompletedTasks);
-
-                // Create and show the dialog
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
-                closeTab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+                Data.showComplete = !Data.showComplete;
+                adapter.filterItems();
+                if (Data.showComplete){
+                    showComplete.setText("Hide Complete");
+                }else{
+                    showComplete.setText("Show Complete");
+                }
             }
         });
     }
@@ -234,7 +224,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                 Data.items.get(position).setCourse(classCourse);
 
                 // Notify the adapter that the data has changed
-                adapter.notifyItemChanged(position);
+                adapter.updateItems(Data.items);
 
                 // Dismiss the dialog
                 dialog.dismiss();
@@ -246,23 +236,12 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                 dialog.dismiss();
             }
         });
-        // Notify the adapter of item removal
-        adapter.notifyItemChanged(position);
     }
 
     @Override
     public void onDeleteButtonClick(int position) {
-
-        String Title = Data.items.get(position).getTitle();
-        String Time = Data.items.get(position).getTime();
-        String Date = Data.items.get(position).getDate();
-        String Course = Data.items.get(position).getCourse();
-
-        Data.completedItems.add(new Item("todo", Title, Time, Date, Course));
-        // Remove the item from the list
-        Data.items.remove(position);
-        // Notify the adapter of item removal
-        adapter.notifyItemRemoved(position);
+        Data.items.get(position).setComplete(!Data.items.get(position).getComplete());
+        adapter.updateItems(Data.items);
     }
 
     @Override
