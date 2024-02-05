@@ -6,99 +6,95 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="25dp"
     app:cardElevation="10dp"
-    android:padding="8dp">
-
-    <LinearLayout
-        android:id="@+id/assignment_linearLayout"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toDoCard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:padding="8dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/white"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:id="@+id/toDoLinearLayout"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/assignment_Edit">
 
             <TextView
                 android:id="@+id/assignment_Title"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:ellipsize="none"
+                android:singleLine="false"
+                android:fontFamily="sans-serif-black"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/assignment_Details"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/topLayoutAssignment"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/assignment_Details"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                app:layout_constraintTop_toBottomOf="@+id/assignment_Title"
-                app:layout_constraintBottom_toTopOf="@id/middleLayoutAssignment">
-
-
-                <TextView
-                    android:id="@+id/assignment_Details"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/black"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/middleLayoutAssignment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="2dp"
-                android:orientation="horizontal"
+                android:ellipsize="none"
+                android:singleLine="false"
+                app:layout_constraintBottom_toTopOf="@+id/Assignment_Course"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/topLayoutAssignment">
-
-
-                <TextView
-                    android:id="@+id/Assignment_Course"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/black"
-                    android:textSize="13sp" />
-
-
-            </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/assignment_Edit"
-                android:layout_width="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/assignment_Title" />
+            <TextView
+                android:id="@+id/Assignment_Course"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:scaleType="fitXY"
-                android:backgroundTint="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/assignmentComplete"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5
-"
-                app:srcCompat="@drawable/edit" />
-
-            <ImageButton
-                android:id="@+id/assignmentComplete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:scaleType="fitXY"
-                android:backgroundTint="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:ellipsize="none"
+                android:singleLine="false"
+                app:layout_constraintBottom_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                app:srcCompat="@drawable/delete" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/assignment_Details" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/assignment_Edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/assignmentComplete"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/toDoLinearLayout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/edit"
+            android:padding="16dp"/>
+
+        <ImageButton
+            android:id="@+id/assignmentComplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/assignment_Edit"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintVertical_bias="0.5"
+            app:srcCompat="@drawable/delete" />
 
 
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

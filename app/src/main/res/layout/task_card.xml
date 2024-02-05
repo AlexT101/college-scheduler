@@ -33,7 +33,9 @@
                 <TextView
                     android:id="@+id/textViewTaskTitle"
                     android:layout_width="150dp"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    android:singleLine="false"
                     android:fontFamily="sans-serif-black"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -45,7 +47,9 @@
                 <TextView
                     android:id="@+id/textViewTaskTime"
                     android:layout_width="150dp"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    android:singleLine="false"
                     app:layout_constraintBottom_toTopOf="@+id/textViewTaskCourse"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +57,9 @@
                 <TextView
                     android:id="@+id/textViewTaskCourse"
                     android:layout_width="150dp"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    android:singleLine="false"
                     app:layout_constraintBottom_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

@@ -73,9 +73,6 @@ public class ExamCardAdapter extends RecyclerView.Adapter<ExamCardAdapter.ExamCa
             holder.textViewDetails.setVisibility(View.GONE);
         }
 
-        Log.d("MyApp", "Location: " + examCard.getLocation());
-
-
         if (!examCard.getCourse().isEmpty()) {
             holder.textViewCourse.setText(examCard.getCourse());
             holder.textViewCourse.setVisibility(View.VISIBLE);

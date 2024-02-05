@@ -210,7 +210,7 @@ public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteB
                 Data.items.get(position).setTime(classTime);
                 Data.items.get(position).setDate(classDate);
                 Data.items.get(position).setCourse(classCourse);
-                Data.items.get(position).setCourse(classLocation);
+                Data.items.get(position).setLocation(classLocation);
 
                 // Notify the adapter that the data has changed
                 adapter.updateItems(Data.items);

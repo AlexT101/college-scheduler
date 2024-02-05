@@ -70,22 +70,68 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
             holder.toDoDeleteButton.setImageResource(R.drawable.incomplete);
         }
 
-        String title = taskCard.getTitle().isEmpty() ? "Untitled" : taskCard.getTitle();
-        holder.textViewToDoTitle.setText(title);
-        if (!taskCard.getTime().isEmpty() || !taskCard.getDate().isEmpty()) {
-            String separator = !taskCard.getTime().isEmpty() && !taskCard.getDate().isEmpty() ? " | " : "";
+        if (taskCard.getType().equals("todo")) {
+            String title = taskCard.getTitle().isEmpty() ? "Untitled" : taskCard.getTitle();
+            holder.textViewToDoTitle.setText(title);
+            if (!taskCard.getTime().isEmpty() || !taskCard.getDate().isEmpty()) {
+                String separator = !taskCard.getTime().isEmpty() && !taskCard.getDate().isEmpty() ? " | " : "";
 
-            String textViewToDoTimeText = taskCard.getTime() + separator + taskCard.getDate();
-            holder.textViewToDoTime.setText(textViewToDoTimeText);
-            holder.textViewToDoTime.setVisibility(View.VISIBLE);
-        }else{
-            holder.textViewToDoTime.setVisibility(View.GONE);
-        }
-        if (!taskCard.getCourse().isEmpty()) {
-            holder.textViewToDoCourse.setText(taskCard.getCourse());
-            holder.textViewToDoCourse.setVisibility(View.VISIBLE);
-        }else{
-            holder.textViewToDoCourse.setVisibility(View.GONE);
+                String textViewToDoTimeText = taskCard.getTime() + separator + taskCard.getDate();
+                holder.textViewToDoTime.setText(textViewToDoTimeText);
+                holder.textViewToDoTime.setVisibility(View.VISIBLE);
+            } else {
+                holder.textViewToDoTime.setVisibility(View.GONE);
+            }
+            if (!taskCard.getCourse().isEmpty()) {
+                holder.textViewToDoCourse.setText(taskCard.getCourse());
+                holder.textViewToDoCourse.setVisibility(View.VISIBLE);
+            } else {
+                holder.textViewToDoCourse.setVisibility(View.GONE);
+            }
+
+
+        }else if (taskCard.getType().equals("assignment")){
+            String title = taskCard.getTitle().isEmpty() ? "Assignment: Untitled" : "Assignment: " + taskCard.getTitle();
+            holder.textViewToDoTitle.setText(title);
+
+            if (!taskCard.getDate().isEmpty() || !taskCard.getTime().isEmpty()) {
+                String separator = !taskCard.getDate().isEmpty() && !taskCard.getTime().isEmpty() ? " | " : "";
+
+                String textViewTimeText = taskCard.getDate() + separator + taskCard.getTime();
+                holder.textViewToDoTime.setText(textViewTimeText);
+                holder.textViewToDoTime.setVisibility(View.VISIBLE);
+            } else {
+                holder.textViewToDoTime.setVisibility(View.GONE);
+            }
+
+
+            if (!taskCard.getCourse().isEmpty()) {
+                holder.textViewToDoCourse.setText(taskCard.getCourse());
+                holder.textViewToDoCourse.setVisibility(View.VISIBLE);
+            }else{
+                holder.textViewToDoCourse.setVisibility(View.GONE);
+            }
+
+
+        }else if (taskCard.getType().equals("exam")){
+            holder.textViewToDoTitle.setText(taskCard.getTitle().isEmpty() ? "Exam: Untitled" : ("Exam: " + taskCard.getTitle()));
+            if (!taskCard.getLocation().isEmpty() || !taskCard.getDate().isEmpty() || !taskCard.getTime().isEmpty()) {
+                String separator = !taskCard.getLocation().isEmpty() && !taskCard.getDate().isEmpty()
+                        && !taskCard.getTime().isEmpty() ? " | " : "";
+
+                String textViewTimeText = taskCard.getLocation() + separator + taskCard.getDate() + separator + taskCard.getTime();
+                holder.textViewToDoTime.setText(textViewTimeText);
+                holder.textViewToDoTime.setVisibility(View.VISIBLE);
+            } else {
+                holder.textViewToDoTime.setVisibility(View.GONE);
+            }
+
+            if (!taskCard.getCourse().isEmpty()) {
+                holder.textViewToDoCourse.setText(taskCard.getCourse());
+                holder.textViewToDoCourse.setVisibility(View.VISIBLE);
+            }else{
+                holder.textViewToDoCourse.setVisibility(View.GONE);
+            }
         }
         holder.toDoDeleteButton.setOnClickListener(v -> {
             if (listener != null) {
@@ -95,6 +141,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
                 }
             }
         });
+
         holder.toDoEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
