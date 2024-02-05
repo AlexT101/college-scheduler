@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">College Scheduler</string>
-    
+
     <string name="title_classes">Classes</string>
     <string name="title_exams">Exams</string>
     <string name="title_assignments">Assignments</string>
@@ -36,6 +36,9 @@
     <string name="save_assignment">Save Assignment</string>
     <string name="course">Course</string>
     <string name="save_exam">Save Exam</string>
+    <string name="get_started">Get Started</string>
+    <string name="intro_message">Manage your classes, assignments, and tasks effortlessly, all in one app.</string>
+    <string name="intro_title">Elevate Your Productivity.</string>
     <string-array name="filter_options">
         <item>None</item>
         <item>Name</item>
