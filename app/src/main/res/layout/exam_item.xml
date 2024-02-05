@@ -82,7 +82,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5
 "
-                app:srcCompat="@drawable/baseline_edit_24" />
+                app:srcCompat="@drawable/edit" />
 
             <ImageButton
                 android:id="@+id/examComplete"
@@ -95,7 +95,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
-                app:srcCompat="@drawable/outline_circle_24" />
+                app:srcCompat="@drawable/delete" />
 
 
 

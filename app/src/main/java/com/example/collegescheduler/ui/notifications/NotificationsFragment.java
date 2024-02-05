@@ -117,6 +117,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         adapter = new TaskCardAdapter(Data.items, this);
         recyclerView.setAdapter(adapter);

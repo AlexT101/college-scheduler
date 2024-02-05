@@ -65,9 +65,9 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
         Item taskCard = displayedCards.get(position);
 
         if (taskCard.getComplete()) {
-            holder.toDoDeleteButton.setImageResource(R.drawable.ic_notifications_black_24dp);
+            holder.toDoDeleteButton.setImageResource(R.drawable.complete);
         }else {
-            holder.toDoDeleteButton.setImageResource(R.drawable.outline_circle_24);
+            holder.toDoDeleteButton.setImageResource(R.drawable.incomplete);
         }
 
         String title = taskCard.getTitle().isEmpty() ? "Untitled" : taskCard.getTitle();

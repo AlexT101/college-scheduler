@@ -72,7 +72,7 @@
                 app:layout_constraintStart_toEndOf="@+id/toDoLinearLayout"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
-                app:srcCompat="@drawable/baseline_edit_24"
+                app:srcCompat="@drawable/edit"
                 android:padding="16dp"/>
 
             <ImageButton
@@ -87,7 +87,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
 
                 app:layout_constraintVertical_bias="0.5"
-                app:srcCompat="@drawable/outline_circle_24" />
+                app:srcCompat="@drawable/incomplete" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

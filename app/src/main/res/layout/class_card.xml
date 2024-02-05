@@ -95,7 +95,7 @@
             app:layout_constraintStart_toEndOf="@+id/cardLinearLayout"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/baseline_edit_24"
+            app:srcCompat="@drawable/edit"
             android:padding="16dp"/>
 
         <ImageButton
@@ -110,7 +110,7 @@
             app:layout_constraintStart_toEndOf="@+id/editButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:srcCompat="@drawable/baseline_auto_delete_24"
+            app:srcCompat="@drawable/delete"
             android:padding="16dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
