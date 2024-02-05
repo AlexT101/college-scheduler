@@ -28,17 +28,15 @@ import com.example.collegescheduler.databinding.FragmentTodosBinding;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 
-import java.util.Collections;
 import java.util.Comparator;
 
 public class TodosFragment extends Fragment implements TaskCardAdapter.OnDeleteButtonClickListener, OnItemSelectedListener {
 
     private FragmentTodosBinding binding;
 
-    private RecyclerView recyclerView;
-
-    private Spinner filter;
     private TaskCardAdapter adapter;
+
+    //If there are no items, display none message
     private TextView none;
     private void updateNone(){
         if (adapter.getItemCount() == 0){
@@ -48,38 +46,21 @@ public class TodosFragment extends Fragment implements TaskCardAdapter.OnDeleteB
         }
     }
 
+    //Sort Data.items depending on what sorting method is chosen
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         switch((String)parent.getItemAtPosition(pos)){
             case "Name":
-                Collections.sort(Data.items, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item item1, Item item2) {
-                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-                        return item1.getTitle().compareTo(item2.getTitle());
-                    }
-                });
-                adapter.notifyDataSetChanged();
+                Data.items.sort(Comparator.comparing(Item::getTitle));
+                adapter.updateItems(Data.items);
                 break;
             case "Due Date":
-                Collections.sort(Data.items, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item item1, Item item2) {
-                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-                        return item1.getDate().compareTo(item2.getDate());
-                    }
-                });
-                adapter.notifyDataSetChanged();
+                Data.items.sort(Comparator.comparing(item -> (item.getDate() + item.getTime())));
+                adapter.updateItems(Data.items);
                 break;
             case "Course":
-                Collections.sort(Data.items, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item item1, Item item2) {
-                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-                        return item1.getCourse().compareTo(item2.getCourse());
-                    }
-                });
-                adapter.notifyDataSetChanged();
+                Data.items.sort(Comparator.comparing(Item::getCourse));
+                adapter.updateItems(Data.items);
                 break;
         }
     }
@@ -93,16 +74,16 @@ public class TodosFragment extends Fragment implements TaskCardAdapter.OnDeleteB
                 new ViewModelProvider(this).get(TodosViewModel.class);
 
         binding = FragmentTodosBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
 
-        return root;
+        return binding.getRoot();
     }
 
-    public void onViewCreated(View view, @Nullable Bundle savedInstance) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstance) {
 
         view = getView();
 
-        filter = view.findViewById(R.id.spinnerFilter);
+        //Update sorting options
+        Spinner filter = view.findViewById(R.id.spinnerFilter);
         filter.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(
@@ -116,111 +97,100 @@ public class TodosFragment extends Fragment implements TaskCardAdapter.OnDeleteB
         // Apply the adapter to the spinner.
         filter.setAdapter(filterAdapter);
 
-        recyclerView = view.findViewById(R.id.recyclerViewToDo);
+        //Put items into recycler view
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewToDo);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-
         adapter = new TaskCardAdapter(Data.items, this);
         recyclerView.setAdapter(adapter);
 
+        //Update no items message
         none = view.findViewById(R.id.text_todosNone);
         updateNone();
 
-        Button addButton = view.findViewById(R.id.addButtonToDo);
+        //Button to toggle whether or not complete tasks should be shown
         Button showComplete = view.findViewById(R.id.showCompleted);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Inflate the dialog layout
-                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_task, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setView(dialogView);
+        //Functionality for adding a new item
+        Button addButton = view.findViewById(R.id.addButtonToDo);
+        addButton.setOnClickListener(v -> {
+            // Inflate the dialog layout
+            View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_task, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setView(dialogView);
 
-                // Find views inside the dialog
-                EditText editTextTitle = dialogView.findViewById(R.id.editTaskTitle);
-                EditText editTextTime = dialogView.findViewById(R.id.editTaskTime);
-                EditText editTextDate = dialogView.findViewById(R.id.editTaskDate);
-                EditText editTextCourse = dialogView.findViewById(R.id.editTaskCourse);
-                Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
-                Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
+            // Find views inside the dialog
+            EditText editTextTitle = dialogView.findViewById(R.id.editTaskTitle);
+            EditText editTextTime = dialogView.findViewById(R.id.editTaskTime);
+            EditText editTextDate = dialogView.findViewById(R.id.editTaskDate);
+            EditText editTextCourse = dialogView.findViewById(R.id.editTaskCourse);
+            Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
+            Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
 
-                // Create and show the dialog
-                AlertDialog dialog = builder.create();
-                dialog.show();
+            // Create and show the dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
-                // Handle the save button click
-                buttonSaveTask.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Get the user input
-                        String classTitle = editTextTitle.getText().toString();
-                        String classTime = editTextTime.getText().toString();
-                        String classDate = editTextDate.getText().toString();
-                        String classCourse = editTextCourse.getText().toString();
+            // Handle the save button click
+            buttonSaveTask.setOnClickListener(v1 -> {
+                // Get the user input
+                String classTitle = editTextTitle.getText().toString();
+                String classTime = editTextTime.getText().toString();
+                String classDate = editTextDate.getText().toString();
+                String classCourse = editTextCourse.getText().toString();
 
-                        // Add the new class to the ArrayList
-                        Data.items.add(new Item("todo", classTitle, classDate, classTime, classCourse));
+                // Add the new class to the ArrayList
+                Data.items.add(new Item("todo", classTitle, classDate, classTime, classCourse));
 
-                        // Notify the adapter that the data has changed
-                        adapter.updateItems(Data.items);
-                        updateNone();
-
-                        // Dismiss the dialog
-                        dialog.dismiss();
-                    }
-                });
-                buttonCancelTask.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-            }
-        });
-        showComplete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Data.showComplete = !Data.showComplete;
-                adapter.filterItems();
+                // Notify the adapter that the data has changed
+                adapter.updateItems(Data.items);
                 updateNone();
-                if (Data.showComplete){
-                    showComplete.setText(R.string.hide_complete);
-                }else{
-                    showComplete.setText(R.string.show_complete);
-                }
+
+                // Dismiss the dialog
+                dialog.dismiss();
+            });
+            buttonCancelTask.setOnClickListener(v2 -> dialog.dismiss());
+        });
+        showComplete.setOnClickListener(v -> {
+            Data.showComplete = !Data.showComplete;
+            adapter.filterItems();
+            updateNone();
+            if (Data.showComplete){
+                showComplete.setText(R.string.hide_complete);
+            }else{
+                showComplete.setText(R.string.show_complete);
             }
         });
     }
+
+    //Functionality for editing items
     public void onEditButtonClick(int position) {
-        // Inflate the dialog layout
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_task, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setView(dialogView);
+        if (Data.items.get(position).getType().equals("assignment")){
+            // Inflate the dialog layout
+            View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_assignments, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setView(dialogView);
 
-        // Find views inside the dialog
-        EditText editTextTitle = dialogView.findViewById(R.id.editTaskTitle);
-        EditText editTextTime = dialogView.findViewById(R.id.editTaskTime);
-        EditText editTextDate = dialogView.findViewById(R.id.editTaskDate);
-        EditText editTextCourse = dialogView.findViewById(R.id.editTaskCourse);
-        Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
-        Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
+            // Find views inside the dialog
+            EditText editTextTitle = dialogView.findViewById(R.id.editTextAssignmentTitle);
+            EditText editTextTime = dialogView.findViewById(R.id.editTextAssignmentTime);
+            EditText editTextDate = dialogView.findViewById(R.id.editTextAssignmentDue);
+            EditText editTextCourse = dialogView.findViewById(R.id.editTextAssignmentCourse);
+            Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveAssignment);
+            Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelAssignment);
 
-        editTextTitle.setText(Data.items.get(position).getTitle());
-        editTextTime.setText(Data.items.get(position).getTime());
-        editTextDate.setText(Data.items.get(position).getDate());
-        editTextCourse.setText(Data.items.get(position).getCourse());
+            editTextTitle.setText(Data.items.get(position).getTitle());
+            editTextTime.setText(Data.items.get(position).getTime());
+            editTextDate.setText(Data.items.get(position).getDate());
+            editTextCourse.setText(Data.items.get(position).getCourse());
 
-        // Create and show the dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
+            // Create and show the dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
-        // Handle the save button click
-        buttonSaveTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            // Handle the save button click
+            buttonSaveTask.setOnClickListener(v -> {
                 // Get the user input
                 String classTitle = editTextTitle.getText().toString();
                 String classTime = editTextTime.getText().toString();
@@ -237,14 +207,99 @@ public class TodosFragment extends Fragment implements TaskCardAdapter.OnDeleteB
 
                 // Dismiss the dialog
                 dialog.dismiss();
-            }
-        });
-        buttonCancelTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            });
+            buttonCancelTask.setOnClickListener(v -> dialog.dismiss());
+        }else if (Data.items.get(position).getType().equals("exam")){
+            // Inflate the dialog layout
+            View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_exam, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setView(dialogView);
+
+            // Find views inside the dialog
+            EditText editTextTitle = dialogView.findViewById(R.id.editTextExamTitle);
+            EditText editTextTime = dialogView.findViewById(R.id.editTextExamTime);
+            EditText editTextDate = dialogView.findViewById(R.id.editTextExamDay);
+            EditText editTextCourse = dialogView.findViewById(R.id.editTextExamCourse);
+            EditText editTextLocation = dialogView.findViewById(R.id.editTextExamLocation);
+            Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveExam);
+            Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelExam);
+
+            editTextTitle.setText(Data.items.get(position).getTitle());
+            editTextTime.setText(Data.items.get(position).getTime());
+            editTextDate.setText(Data.items.get(position).getDate());
+            editTextCourse.setText(Data.items.get(position).getCourse());
+            editTextLocation.setText(Data.items.get(position).getLocation());
+
+            // Create and show the dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            // Handle the save button click
+            buttonSaveTask.setOnClickListener(v -> {
+                // Get the user input
+                String classTitle = editTextTitle.getText().toString();
+                String classTime = editTextTime.getText().toString();
+                String classDate = editTextDate.getText().toString();
+                String classCourse = editTextCourse.getText().toString();
+                String classLocation = editTextLocation.getText().toString();
+
+                Data.items.get(position).setTitle(classTitle);
+                Data.items.get(position).setTime(classTime);
+                Data.items.get(position).setDate(classDate);
+                Data.items.get(position).setCourse(classCourse);
+                Data.items.get(position).setLocation(classLocation);
+
+                // Notify the adapter that the data has changed
+                adapter.updateItems(Data.items);
+
+                // Dismiss the dialog
                 dialog.dismiss();
-            }
-        });
+            });
+            buttonCancelTask.setOnClickListener(v -> dialog.dismiss());
+        }else {
+            // Inflate the dialog layout
+            View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_task, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setView(dialogView);
+
+            // Find views inside the dialog
+            EditText editTextTitle = dialogView.findViewById(R.id.editTaskTitle);
+            EditText editTextTime = dialogView.findViewById(R.id.editTaskTime);
+            EditText editTextDate = dialogView.findViewById(R.id.editTaskDate);
+            EditText editTextCourse = dialogView.findViewById(R.id.editTaskCourse);
+            Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
+            Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
+
+            editTextTitle.setText(Data.items.get(position).getTitle());
+            editTextTime.setText(Data.items.get(position).getTime());
+            editTextDate.setText(Data.items.get(position).getDate());
+            editTextCourse.setText(Data.items.get(position).getCourse());
+
+            // Create and show the dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            // Handle the save button click
+            buttonSaveTask.setOnClickListener(v -> {
+                // Get the user input
+                String classTitle = editTextTitle.getText().toString();
+                String classTime = editTextTime.getText().toString();
+                String classDate = editTextDate.getText().toString();
+                String classCourse = editTextCourse.getText().toString();
+
+                Data.items.get(position).setTitle(classTitle);
+                Data.items.get(position).setTime(classTime);
+                Data.items.get(position).setDate(classDate);
+                Data.items.get(position).setCourse(classCourse);
+
+                // Notify the adapter that the data has changed
+                adapter.updateItems(Data.items);
+
+                // Dismiss the dialog
+                dialog.dismiss();
+            });
+            buttonCancelTask.setOnClickListener(v -> dialog.dismiss());
+        }
     }
 
     @Override

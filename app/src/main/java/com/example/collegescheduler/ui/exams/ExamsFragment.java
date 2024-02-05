@@ -27,15 +27,14 @@ import com.example.collegescheduler.R;
 import com.example.collegescheduler.SpacesItemDecoration;
 import com.example.collegescheduler.databinding.FragmentExamsBinding;
 
-import java.util.Collections;
 import java.util.Comparator;
 
 public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteButtonClickListener, AdapterView.OnItemSelectedListener {
 
     private FragmentExamsBinding binding;
-    private RecyclerView recyclerView;
-    private Spinner filter;
     private ExamCardAdapter adapter;
+
+    //If there are no items, display none message
     private TextView none;
     private void updateNone(){
         if (adapter.getItemCount() == 0){
@@ -45,37 +44,20 @@ public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteB
         }
     }
 
+    //Sort Data.items depending on what sorting method is chosen
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         switch((String)parent.getItemAtPosition(pos)){
             case "Name":
-                Collections.sort(Data.items, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item item1, Item item2) {
-                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-                        return item1.getTitle().compareTo(item2.getTitle());
-                    }
-                });
+                Data.items.sort(Comparator.comparing(Item::getTitle));
                 adapter.updateItems(Data.items);
                 break;
             case "Due Date":
-                Collections.sort(Data.items, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item item1, Item item2) {
-                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-                        return item1.getDate().compareTo(item2.getDate());
-                    }
-                });
+                Data.items.sort(Comparator.comparing(item -> (item.getDate() + item.getTime())));
                 adapter.updateItems(Data.items);
                 break;
             case "Course":
-                Collections.sort(Data.items, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item item1, Item item2) {
-                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-                        return item1.getCourse().compareTo(item2.getCourse());
-                    }
-                });
+                Data.items.sort(Comparator.comparing(Item::getCourse));
                 adapter.updateItems(Data.items);
                 break;
         }
@@ -92,16 +74,16 @@ public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteB
                 new ViewModelProvider(this).get(ExamsViewModel.class);
 
         binding = FragmentExamsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
 
-        return root;
+        return binding.getRoot();
     }
 
-    public void onViewCreated(View view, @Nullable Bundle savedInstance) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstance) {
 
         view = getView();
 
-        filter = view.findViewById(R.id.spinnerFilterExam);
+        //Update sorting options
+        Spinner filter = view.findViewById(R.id.spinnerFilterExam);
         filter.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(
@@ -115,74 +97,64 @@ public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteB
         // Apply the adapter to the spinner.
         filter.setAdapter(filterAdapter);
 
-        recyclerView = view.findViewById(R.id.recyclerViewExam);
+        //Put items into recycler view
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewExam);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-
         adapter = new ExamCardAdapter(Data.items, this);
         recyclerView.setAdapter(adapter);
 
+        //Update no items message
         none = view.findViewById(R.id.text_examsNone);
         updateNone();
 
+        //Functionality for adding a new item
         Button addButton = view.findViewById(R.id.addButtonExam);
+        addButton.setOnClickListener(v -> {
+            // Inflate the dialog layout
+            View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_exam, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setView(dialogView);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Inflate the dialog layout
-                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_exam, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setView(dialogView);
+            // Find views inside the dialog
+            EditText editTextTitle = dialogView.findViewById(R.id.editTextExamTitle);
+            EditText editTextTime = dialogView.findViewById(R.id.editTextExamTime);
+            EditText editTextDate = dialogView.findViewById(R.id.editTextExamDay);
+            EditText editTextCourse = dialogView.findViewById(R.id.editTextExamCourse);
+            EditText editTextLocation = dialogView.findViewById(R.id.editTextExamLocation);
+            Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveExam);
+            Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelExam);
 
-                // Find views inside the dialog
-                EditText editTextTitle = dialogView.findViewById(R.id.editTextExamTitle);
-                EditText editTextTime = dialogView.findViewById(R.id.editTextExamTime);
-                EditText editTextDate = dialogView.findViewById(R.id.editTextExamDay);
-                EditText editTextCourse = dialogView.findViewById(R.id.editTextExamCourse);
-                EditText editTextLocation = dialogView.findViewById(R.id.editTextExamLocation);
-                Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveExam);
-                Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelExam);
+            // Create and show the dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
-                // Create and show the dialog
-                AlertDialog dialog = builder.create();
-                dialog.show();
+            // Handle the save button click
+            buttonSaveTask.setOnClickListener(v1 -> {
+                // Get the user input
+                String classTitle = editTextTitle.getText().toString();
+                String classTime = editTextTime.getText().toString();
+                String classDate = editTextDate.getText().toString();
+                String classCourse = editTextCourse.getText().toString();
+                String classLocation = editTextLocation.getText().toString();
 
-                // Handle the save button click
-                buttonSaveTask.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Get the user input
-                        String classTitle = editTextTitle.getText().toString();
-                        String classTime = editTextTime.getText().toString();
-                        String classDate = editTextDate.getText().toString();
-                        String classCourse = editTextCourse.getText().toString();
-                        String classLocation = editTextLocation.getText().toString();
+                // Add the new class to the ArrayList
+                Data.items.add(new Item("exam", classTitle, classDate, classTime, classCourse, classLocation));
 
-                        // Add the new class to the ArrayList
-                        Data.items.add(new Item("exam", classTitle, classDate, classTime, classCourse, classLocation));
+                // Notify the adapter that the data has changed
+                adapter.updateItems(Data.items);
+                updateNone();
 
-                        // Notify the adapter that the data has changed
-                        adapter.updateItems(Data.items);
-                        updateNone();
+                // Dismiss the dialog
+                dialog.dismiss();
+            });
+            buttonCancelTask.setOnClickListener(v2 -> dialog.dismiss());
 
-                        // Dismiss the dialog
-                        dialog.dismiss();
-                    }
-                });
-                buttonCancelTask.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-            }
         });
     }
 
+    //Functionality for editing items
     public void onEditButtonClick(int position) {
         // Inflate the dialog layout
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_exam, null);
@@ -209,35 +181,27 @@ public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteB
         dialog.show();
 
         // Handle the save button click
-        buttonSaveTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get the user input
-                String classTitle = editTextTitle.getText().toString();
-                String classTime = editTextTime.getText().toString();
-                String classDate = editTextDate.getText().toString();
-                String classCourse = editTextCourse.getText().toString();
-                String classLocation = editTextLocation.getText().toString();
+        buttonSaveTask.setOnClickListener(v -> {
+            // Get the user input
+            String classTitle = editTextTitle.getText().toString();
+            String classTime = editTextTime.getText().toString();
+            String classDate = editTextDate.getText().toString();
+            String classCourse = editTextCourse.getText().toString();
+            String classLocation = editTextLocation.getText().toString();
 
-                Data.items.get(position).setTitle(classTitle);
-                Data.items.get(position).setTime(classTime);
-                Data.items.get(position).setDate(classDate);
-                Data.items.get(position).setCourse(classCourse);
-                Data.items.get(position).setLocation(classLocation);
+            Data.items.get(position).setTitle(classTitle);
+            Data.items.get(position).setTime(classTime);
+            Data.items.get(position).setDate(classDate);
+            Data.items.get(position).setCourse(classCourse);
+            Data.items.get(position).setLocation(classLocation);
 
-                // Notify the adapter that the data has changed
-                adapter.updateItems(Data.items);
+            // Notify the adapter that the data has changed
+            adapter.updateItems(Data.items);
 
-                // Dismiss the dialog
-                dialog.dismiss();
-            }
+            // Dismiss the dialog
+            dialog.dismiss();
         });
-        buttonCancelTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        buttonCancelTask.setOnClickListener(v -> dialog.dismiss());
     }
 
     @Override
