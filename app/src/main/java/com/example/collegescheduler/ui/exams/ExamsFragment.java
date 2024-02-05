@@ -1,4 +1,4 @@
-package com.example.collegescheduler.ui.notifications;
+package com.example.collegescheduler.ui.exams;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,31 +18,23 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.collegescheduler.ClassCard;
-import com.example.collegescheduler.Item;
-import com.example.collegescheduler.TaskCard;
-import com.example.collegescheduler.TaskCardAdapter;
+
 import com.example.collegescheduler.Data;
+import com.example.collegescheduler.ExamCardAdapter;
+import com.example.collegescheduler.Item;
 import com.example.collegescheduler.R;
 import com.example.collegescheduler.SpacesItemDecoration;
-import com.example.collegescheduler.databinding.FragmentNotificationsBinding;
-import android.widget.AdapterView.OnItemSelectedListener;
+import com.example.collegescheduler.databinding.FragmentExamsBinding;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
+public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteButtonClickListener, AdapterView.OnItemSelectedListener {
 
-public class NotificationsFragment extends Fragment implements TaskCardAdapter.OnDeleteButtonClickListener, OnItemSelectedListener {
-
-    private FragmentNotificationsBinding binding;
-
+    private FragmentExamsBinding binding;
     private RecyclerView recyclerView;
-
     private Spinner filter;
-    private TaskCardAdapter adapter;
+    private ExamCardAdapter adapter;
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
@@ -56,7 +47,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         return item1.getTitle().compareTo(item2.getTitle());
                     }
                 });
-                adapter.notifyDataSetChanged();
+                adapter.updateItems(Data.items);
                 break;
             case "Due Date":
                 Collections.sort(Data.items, new Comparator<Item>() {
@@ -66,7 +57,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         return item1.getDate().compareTo(item2.getDate());
                     }
                 });
-                adapter.notifyDataSetChanged();
+                adapter.updateItems(Data.items);
                 break;
             case "Course":
                 Collections.sort(Data.items, new Comparator<Item>() {
@@ -76,7 +67,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         return item1.getCourse().compareTo(item2.getCourse());
                     }
                 });
-                adapter.notifyDataSetChanged();
+                adapter.updateItems(Data.items);
                 break;
         }
     }
@@ -84,12 +75,14 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback.
     }
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        ExamsViewModel examsViewModel =
+                new ViewModelProvider(this).get(ExamsViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentExamsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;
@@ -99,7 +92,7 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
 
         view = getView();
 
-        filter = view.findViewById(R.id.spinnerFilter);
+        filter = view.findViewById(R.id.spinnerFilterExam);
         filter.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(
@@ -113,33 +106,33 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
         // Apply the adapter to the spinner.
         filter.setAdapter(filterAdapter);
 
-        recyclerView = view.findViewById(R.id.recyclerViewToDo);
+        recyclerView = view.findViewById(R.id.recyclerViewExam);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_spacing);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
-        adapter = new TaskCardAdapter(Data.items, this);
+        adapter = new ExamCardAdapter(Data.items, this);
         recyclerView.setAdapter(adapter);
 
-        Button addButton = view.findViewById(R.id.addButtonToDo);
-        Button showComplete = view.findViewById(R.id.showCompleted);
+        Button addButton = view.findViewById(R.id.addButtonExam);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Inflate the dialog layout
-                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_task, null);
+                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_exam, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setView(dialogView);
 
                 // Find views inside the dialog
-                EditText editTextTitle = dialogView.findViewById(R.id.editTaskTitle);
-                EditText editTextTime = dialogView.findViewById(R.id.editTaskTime);
-                EditText editTextDate = dialogView.findViewById(R.id.editTaskDate);
-                EditText editTextCourse = dialogView.findViewById(R.id.editTaskCourse);
-                Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
-                Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
+                EditText editTextTitle = dialogView.findViewById(R.id.editTextExamTitle);
+                EditText editTextTime = dialogView.findViewById(R.id.editTextExamTime);
+                EditText editTextDate = dialogView.findViewById(R.id.editTextExamDay);
+                EditText editTextCourse = dialogView.findViewById(R.id.editTextExamCourse);
+                EditText editTextLocation = dialogView.findViewById(R.id.editTextExamLocation);
+                Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveExam);
+                Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelExam);
 
                 // Create and show the dialog
                 AlertDialog dialog = builder.create();
@@ -154,9 +147,10 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         String classTime = editTextTime.getText().toString();
                         String classDate = editTextDate.getText().toString();
                         String classCourse = editTextCourse.getText().toString();
+                        String classLocation = editTextLocation.getText().toString();
 
                         // Add the new class to the ArrayList
-                        Data.items.add(new Item("todo", classTitle, classDate, classTime, classCourse));
+                        Data.items.add(new Item("exam", classTitle, classDate, classTime, classCourse, classLocation));
 
                         // Notify the adapter that the data has changed
                         adapter.updateItems(Data.items);
@@ -171,39 +165,31 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                         dialog.dismiss();
                     }
                 });
-            }
-        });
-        showComplete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Data.showComplete = !Data.showComplete;
-                adapter.filterItems();
-                if (Data.showComplete){
-                    showComplete.setText("Hide Complete");
-                }else{
-                    showComplete.setText("Show Complete");
-                }
+
             }
         });
     }
+
     public void onEditButtonClick(int position) {
         // Inflate the dialog layout
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_task, null);
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_exam, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(dialogView);
 
         // Find views inside the dialog
-        EditText editTextTitle = dialogView.findViewById(R.id.editTaskTitle);
-        EditText editTextTime = dialogView.findViewById(R.id.editTaskTime);
-        EditText editTextDate = dialogView.findViewById(R.id.editTaskDate);
-        EditText editTextCourse = dialogView.findViewById(R.id.editTaskCourse);
-        Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveTask);
-        Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelTask);
+        EditText editTextTitle = dialogView.findViewById(R.id.editTextExamTitle);
+        EditText editTextTime = dialogView.findViewById(R.id.editTextExamTime);
+        EditText editTextDate = dialogView.findViewById(R.id.editTextExamDay);
+        EditText editTextCourse = dialogView.findViewById(R.id.editTextExamCourse);
+        EditText editTextLocation = dialogView.findViewById(R.id.editTextExamLocation);
+        Button buttonSaveTask = dialogView.findViewById(R.id.buttonSaveExam);
+        Button buttonCancelTask = dialogView.findViewById(R.id.buttonCancelExam);
 
         editTextTitle.setText(Data.items.get(position).getTitle());
         editTextTime.setText(Data.items.get(position).getTime());
         editTextDate.setText(Data.items.get(position).getDate());
         editTextCourse.setText(Data.items.get(position).getCourse());
+        editTextLocation.setText(Data.items.get(position).getLocation());
 
         // Create and show the dialog
         AlertDialog dialog = builder.create();
@@ -218,11 +204,13 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
                 String classTime = editTextTime.getText().toString();
                 String classDate = editTextDate.getText().toString();
                 String classCourse = editTextCourse.getText().toString();
+                String classLocation = editTextLocation.getText().toString();
 
                 Data.items.get(position).setTitle(classTitle);
                 Data.items.get(position).setTime(classTime);
                 Data.items.get(position).setDate(classDate);
                 Data.items.get(position).setCourse(classCourse);
+                Data.items.get(position).setCourse(classLocation);
 
                 // Notify the adapter that the data has changed
                 adapter.updateItems(Data.items);
@@ -241,7 +229,9 @@ public class NotificationsFragment extends Fragment implements TaskCardAdapter.O
 
     @Override
     public void onDeleteButtonClick(int position) {
-        Data.items.get(position).setComplete(!Data.items.get(position).getComplete());
+        // Remove the item from the list
+        Data.items.remove(position);
+        // Notify the adapter of item removal
         adapter.updateItems(Data.items);
     }
 

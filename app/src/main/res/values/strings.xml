@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">CollegeScheduler</string>
+    <string name="app_name">College Scheduler</string>
+    
     <string name="title_classes">Classes</string>
     <string name="title_exams">Exams</string>
     <string name="title_assignments">Assignments</string>
-    <string name="title_notifications">To-Do</string>
+    <string name="title_todos">To-Do</string>
 
     <string name="header_classes">Class List</string>
     <string name="header_exams">Exam List</string>

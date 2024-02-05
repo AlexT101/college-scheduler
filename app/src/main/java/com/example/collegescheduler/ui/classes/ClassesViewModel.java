@@ -1,16 +1,16 @@
-package com.example.collegescheduler.ui.notifications;
+package com.example.collegescheduler.ui.classes;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class ClassesViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public ClassesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("ToDo List");
+        mText.setValue("This is home fragment");
     }
 
     public LiveData<String> getText() {

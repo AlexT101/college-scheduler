@@ -1,16 +1,16 @@
-package com.example.collegescheduler.ui.home;
+package com.example.collegescheduler.ui.todos;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class TodosViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public TodosViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("ToDo List");
     }
 
     public LiveData<String> getText() {

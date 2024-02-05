@@ -1,4 +1,4 @@
-package com.example.collegescheduler.ui.home;
+package com.example.collegescheduler.ui.classes;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,26 +19,23 @@ import com.example.collegescheduler.ClassCardAdapter;
 import com.example.collegescheduler.Data;
 import com.example.collegescheduler.R;
 import com.example.collegescheduler.SpacesItemDecoration;
-import com.example.collegescheduler.databinding.FragmentHomeBinding;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.collegescheduler.databinding.FragmentClassesBinding;
 
 import androidx.appcompat.app.AlertDialog;
 
-public class HomeFragment extends Fragment implements ClassCardAdapter.OnDeleteButtonClickListener {
+public class ClassesFragment extends Fragment implements ClassCardAdapter.OnDeleteButtonClickListener {
 
-    private FragmentHomeBinding binding;
+    private FragmentClassesBinding binding;
 
     private RecyclerView recyclerView;
     private ClassCardAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        ClassesViewModel classesViewModel =
+                new ViewModelProvider(this).get(ClassesViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentClassesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;
