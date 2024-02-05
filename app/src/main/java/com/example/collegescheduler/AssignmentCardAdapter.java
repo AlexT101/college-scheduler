@@ -62,7 +62,7 @@ public class AssignmentCardAdapter extends RecyclerView.Adapter<AssignmentCardAd
     @Override
     public void onBindViewHolder(AssignmentCardViewHolder holder, int position) {
         Item assignmentCard = displayedCards.get(position);
-        holder.textViewTitle.setText(assignmentCard.getTitle().isEmpty() ? "Untitled Assignment" : assignmentCard.getTitle());
+        holder.textViewTitle.setText(assignmentCard.getTitle().isEmpty() ? "Untitled" : assignmentCard.getTitle());
 
         if (!assignmentCard.getDate().isEmpty() || !assignmentCard.getTime().isEmpty()) {
             String separator = !assignmentCard.getDate().isEmpty() && !assignmentCard.getTime().isEmpty() ? " | " : "";

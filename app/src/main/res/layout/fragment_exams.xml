@@ -54,12 +54,26 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/text_examsNone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/exam_message"
+            android:textAlignment="center"
+            android:textColor="@color/introMessage"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:layout_below="@+id/filterHolderExam"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewExam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/filterHolderExam"
+            android:layout_below="@+id/text_examsNone"
             android:layout_alignParentStart="true"
             android:nestedScrollingEnabled="false" />
 
@@ -68,7 +82,7 @@
             android:layout_width="128dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="@string/addTask"
+            android:text="@string/add_exam"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/recyclerViewExam" />
 

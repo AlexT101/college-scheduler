@@ -70,9 +70,13 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
             holder.toDoDeleteButton.setImageResource(R.drawable.incomplete);
         }
 
+        String type = taskCard.getType().equals("assignment") ? "ASSIGNMENT" : taskCard.getType().equals("exam") ? "EXAM" : "TODO";
+        holder.textViewTaskType.setText(type);
+
+        String title = taskCard.getTitle().isEmpty() ? "Untitled" : taskCard.getTitle();
+        holder.textViewToDoTitle.setText(title);
+
         if (taskCard.getType().equals("todo")) {
-            String title = taskCard.getTitle().isEmpty() ? "Untitled" : taskCard.getTitle();
-            holder.textViewToDoTitle.setText(title);
             if (!taskCard.getTime().isEmpty() || !taskCard.getDate().isEmpty()) {
                 String separator = !taskCard.getTime().isEmpty() && !taskCard.getDate().isEmpty() ? " | " : "";
 
@@ -91,9 +95,6 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
 
 
         }else if (taskCard.getType().equals("assignment")){
-            String title = taskCard.getTitle().isEmpty() ? "Assignment: Untitled" : "Assignment: " + taskCard.getTitle();
-            holder.textViewToDoTitle.setText(title);
-
             if (!taskCard.getDate().isEmpty() || !taskCard.getTime().isEmpty()) {
                 String separator = !taskCard.getDate().isEmpty() && !taskCard.getTime().isEmpty() ? " | " : "";
 
@@ -114,7 +115,6 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
 
 
         }else if (taskCard.getType().equals("exam")){
-            holder.textViewToDoTitle.setText(taskCard.getTitle().isEmpty() ? "Exam: Untitled" : ("Exam: " + taskCard.getTitle()));
             if (!taskCard.getLocation().isEmpty() || !taskCard.getDate().isEmpty() || !taskCard.getTime().isEmpty()) {
                 String separator = !taskCard.getLocation().isEmpty() && !taskCard.getDate().isEmpty()
                         && !taskCard.getTime().isEmpty() ? " | " : "";
@@ -162,7 +162,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
 
     static class TaskCardViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout toDoCard;
-        TextView textViewToDoTitle, textViewToDoTime, textViewToDoCourse;
+        TextView textViewToDoTitle, textViewToDoTime, textViewToDoCourse, textViewTaskType;
         ImageButton toDoDeleteButton, toDoEditButton;
 
         public TaskCardViewHolder(View itemView) {
@@ -173,6 +173,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
             toDoDeleteButton = itemView.findViewById(R.id.toDoDeleteButton);
             toDoEditButton = itemView.findViewById(R.id.toDoEditButton);
             toDoCard = itemView.findViewById(R.id.toDoCard);
+            textViewTaskType = itemView.findViewById(R.id.textViewTaskType);
 
         }
     }

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,14 @@ public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteB
     private RecyclerView recyclerView;
     private Spinner filter;
     private ExamCardAdapter adapter;
+    private TextView none;
+    private void updateNone(){
+        if (adapter.getItemCount() == 0){
+            none.setVisibility(View.VISIBLE);
+        }else{
+            none.setVisibility(View.GONE);
+        }
+    }
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
@@ -115,6 +124,9 @@ public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteB
         adapter = new ExamCardAdapter(Data.items, this);
         recyclerView.setAdapter(adapter);
 
+        none = view.findViewById(R.id.text_examsNone);
+        updateNone();
+
         Button addButton = view.findViewById(R.id.addButtonExam);
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +166,7 @@ public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteB
 
                         // Notify the adapter that the data has changed
                         adapter.updateItems(Data.items);
+                        updateNone();
 
                         // Dismiss the dialog
                         dialog.dismiss();
@@ -233,6 +246,7 @@ public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteB
         Data.items.remove(position);
         // Notify the adapter of item removal
         adapter.updateItems(Data.items);
+        updateNone();
     }
 
     @Override

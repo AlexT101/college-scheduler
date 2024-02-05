@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class ClassesFragment extends Fragment implements ClassCardAdapter.OnDele
 
     private RecyclerView recyclerView;
     private ClassCardAdapter adapter;
+    private TextView none;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +41,14 @@ public class ClassesFragment extends Fragment implements ClassCardAdapter.OnDele
         View root = binding.getRoot();
 
         return root;
+    }
+
+    private void updateNone(){
+        if (adapter.getItemCount() == 0){
+            none.setVisibility(View.VISIBLE);
+        }else{
+            none.setVisibility(View.GONE);
+        }
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstance) {
@@ -54,6 +64,9 @@ public class ClassesFragment extends Fragment implements ClassCardAdapter.OnDele
 
         adapter = new ClassCardAdapter(Data.classCardList, this);
         recyclerView.setAdapter(adapter);
+
+        none = view.findViewById(R.id.text_classesNone);
+        updateNone();
 
         Button addButton = view.findViewById(R.id.addButton);
 
@@ -99,6 +112,7 @@ public class ClassesFragment extends Fragment implements ClassCardAdapter.OnDele
 
                         // Notify the adapter that the data has changed
                         adapter.notifyItemInserted(Data.classCardList.size()-1);
+                        updateNone();
 
                         // Dismiss the dialog
                         dialog.dismiss();
@@ -197,6 +211,7 @@ public class ClassesFragment extends Fragment implements ClassCardAdapter.OnDele
             public void onClick(View v) {
                 Data.classCardList.remove(position);
                 adapter.notifyItemRemoved(position);
+                updateNone();
                 dialog.dismiss();
             }
         });

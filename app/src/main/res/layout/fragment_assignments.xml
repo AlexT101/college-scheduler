@@ -54,12 +54,26 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/text_assignmentsNone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/assignment_message"
+            android:textAlignment="center"
+            android:textColor="@color/introMessage"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:layout_below="@+id/filterHolderAssignment"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewAssignment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/filterHolderAssignment"
+            android:layout_below="@+id/text_assignmentsNone"
             android:layout_alignParentStart="true"
             android:nestedScrollingEnabled="false" />
 
@@ -68,7 +82,7 @@
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="@string/add_assignment_button"
+            android:text="@string/add_assignment"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/recyclerViewAssignment" />
 
