@@ -206,11 +206,24 @@ public class ExamsFragment extends Fragment implements ExamCardAdapter.OnDeleteB
 
     @Override
     public void onDeleteButtonClick(int position) {
-        // Remove the item from the list
-        Data.items.remove(position);
-        // Notify the adapter of item removal
-        adapter.updateItems(Data.items);
-        updateNone();
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.delete_confirmation, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(dialogView);
+
+        Button buttonDeleteConfirmed = dialogView.findViewById(R.id.deleteConfirmed);
+        Button buttonDeleteCancel = dialogView.findViewById(R.id.deleteCancel);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        buttonDeleteConfirmed.setOnClickListener(v -> {
+            Data.items.remove(position);
+            // Notify the adapter of item removal
+            adapter.updateItems(Data.items);
+            updateNone();
+            dialog.dismiss();
+        });
+        buttonDeleteCancel.setOnClickListener(v -> dialog.dismiss());
     }
 
     @Override
