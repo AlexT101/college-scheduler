@@ -2,11 +2,7 @@
 
 College Scheduler is an Android app, built using Java, that helps students manage their academic schedules. Students can add their classes, assignments, exams, and upcoming tasks that they need to work on, with functionality for sorting and filtering items. This project was built for Georgia Tech class CS2340.
 
-<div>
-  <img src="readme-images/home.jpg" width="30%">
-  <img src="readme-images/classes.jpg" width="30%">
-  <img src="readme-images/todos.jpg" width="30%">
-</div>
+<img src="./Render.png">
 
 ### Views
 - Separate pages for viewing classes, assignments, and exams
