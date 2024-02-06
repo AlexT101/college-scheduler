@@ -45,7 +45,7 @@
             android:id="@+id/buttonSaveTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Task" />
+            android:text="@string/save_task" />
 
         <Button
             android:id="@+id/buttonCancelTask"

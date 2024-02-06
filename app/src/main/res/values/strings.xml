@@ -53,6 +53,7 @@
     <string name="hide">Hide Complete</string>
     <string name="hide_complete">Hide Complete</string>
     <string name="show_complete">Show Complete</string>
+    <string name="save_task">Save Task</string>
     <string-array name="filter_options">
         <item>None</item>
         <item>Name</item>
