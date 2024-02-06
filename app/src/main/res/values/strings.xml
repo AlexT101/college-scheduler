@@ -49,7 +49,7 @@
     <string name="intro_message">Manage your classes, assignments, and tasks effortlessly, all in one app.</string>
     <string name="intro_title">Elevate Your Productivity.</string>
 
-    <string name="filter_by">Filter By:</string>
+    <string name="filter_by">Sort By:</string>
     <string name="hide">Hide Complete</string>
     <string name="hide_complete">Hide Complete</string>
     <string name="show_complete">Show Complete</string>
